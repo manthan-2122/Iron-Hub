@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trainer Login - Iron Hub</title>
+    <link rel="stylesheet" href="/static/css/login.css">
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="brand">
+            <span class="brand-icon">🏋️</span>
+            <span class="brand-name">Iron Hub</span>
+        </div>
+        <h2 class="page-title">Trainer Login</h2>
+        <a href="/" class="back-link">← Back to Home</a>
+
+        <form id="trainer-login-form">
+            <div class="form-group">
+                <label for="email">Trainer ID / Email</label>
+                <input type="text" id="email" class="form-control" placeholder="Enter your ID or email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" class="form-control" placeholder="Enter your password" required>
+            </div>
+
+            <div class="form-options">
+                <label class="remember-me">
+                    <input type="checkbox"> Remember me
+                </label>
+                <a href="#" class="forgot-password">Forgot password?</a>
+            </div>
+
+            <button type="submit" class="btn-login">Login</button>
+            <div id="login-error" style="display: none; color: red; margin-top: 10px; text-align: center;">Invalid email or password.</div>
+        </form>
+
+        <div class="register-link">
+            Not a trainer yet? <a href="/trainer/register">Apply here</a>
+        </div>
+
+        <div class="role-switcher">
+            <a href="/login">User</a>
+            <a href="/trainer/login" class="active">Trainer</a>
+            <a href="/admin/login">Admin</a>
+        </div>
+    </div>
+    <script src="/static/js/trainer_login.js"></script>
+</body>
+
+</html>

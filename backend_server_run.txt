@@ -1,0 +1,47 @@
+Run the backend server
+1. Open terminal in project folder
+Open PowerShell or Command Prompt and go 
+to: cd "c:\Users\patel\Desktop\6th Sem Project\Iron-Hub\Iron-Hub"
+
+2. Activate Python virtual environment
+If there is a venv folder, run
+: .\venv\Scripts\activate
+
+-->>>If no virtual environment exists, create one
+: python -m venv venv
+.\venv\Scripts\activate
+
+3. Install required packages
+Install Flask and PyMySQL: pip install flask pymysql
+
+4. Verify database configuration
+The app currently imports localhot.py in app.py, so it will use the remote Aiven MySQL database by default.
+
+If you want to use your local MySQL instead, open app.py and change
+:# from connection import db_connection
+   from localhot import db_connection
+
+to: 
+   from connection import db_connection
+   # from localhot import db_connection
+
+Then ensure connection.py has the correct local DB settings:
+
+host: localhost
+user: Iron_Hub
+password: Iron_hub
+database: gym_management
+
+
+5. Start the server
+Run: python app.py
+
+6. Open the app in your browser
+Go to: http://127.0.0.1:5000
+
+Notes
+app.py is the backend entrypoint.
+If the server fails because of missing DB or credentials, check localhot.py / connection.py.
+The project uses Flask with templates in Templates and static files in static.
+Completed: Create a virtual environment and install necessary packages if not already done (5/6)
+

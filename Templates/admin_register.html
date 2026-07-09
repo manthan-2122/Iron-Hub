@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Registration - Iron Hub</title>
+    <link rel="stylesheet" href="/static/css/register.css">
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="brand">
+            <span class="brand-icon">🏋️</span>
+            <span class="brand-name">Iron Hub</span>
+        </div>
+        <h2 class="page-title">Admin Registration</h2>
+        <a href="/" class="back-link">← Back to Home</a>
+
+        <form>
+            <div class="form-group">
+                <label for="username">Admin Username</label>
+                <input type="text" id="username" class="form-control" placeholder="admin_user" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Official Email</label>
+                <input type="email" id="email" class="form-control" placeholder="admin@ironhub.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" class="form-control" placeholder="Create a strong password"
+                    maxlength="8" minlength="8" required>
+            </div>
+
+            <div class="form-group">
+                <label for="confirm-password">Confirm Password</label>
+                <input type="password" id="confirm-password" class="form-control" placeholder="Confirm your password"
+                    maxlength="8" minlength="8" required>
+            </div>
+
+            <button type="submit" class="btn-login">Register Admin</button>
+            <div id="success-message" class="success-message"
+                style="display: none; color: green; margin-top: 10px; text-align: center;">Your account has been created
+                successfully!</div>
+            <div id="password-error" class="error-message"
+                style="display: none; color: red; margin-top: 10px; text-align: center;">Password must be exactly 8
+                characters.</div>
+            <div id="error-message" class="error-message"
+                style="display: none; color: red; margin-top: 10px; text-align: center;">This email id is already
+                registered.</div>
+        </form>
+
+        <div class="register-link">
+            Alternatively <a href="/admin/login">Login as Admin</a>
+        </div>
+
+        <div class="role-switcher">
+            <a href="/register">User</a>
+            <a href="/trainer/register">Trainer</a>
+            <a href="/admin/register" class="active">Admin</a>
+        </div>
+    </div>
+    <script src="/static/js/admin_register.js"></script>
+</body>
+
+</html>

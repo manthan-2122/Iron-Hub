@@ -1,0 +1,313 @@
+/* ===== New Features Styles ===== */
+
+/* Membership Expiry Notification */
+.membership-notification {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.notification-content {
+    background: linear-gradient(135deg, #f59e0b, #f97316);
+    color: white;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: space-between;
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+    flex-wrap: wrap;
+}
+
+.notification-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.notification-text {
+    flex: 1;
+    min-width: 200px;
+}
+
+.notification-text strong {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+.notification-text p {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    margin: 0;
+}
+
+.notification-action-btn {
+    padding: 8px 16px;
+    background: white;
+    color: #f59e0b;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.notification-action-btn:hover {
+    background: #fffbeb;
+    transform: translateY(-1px);
+}
+
+.notification-close-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.notification-close-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* BMI Calculator Styles */
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    font-size: 0.9rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Live Chat Styles */
+#chat-messages {
+    scroll-behavior: smooth;
+}
+
+.chat-message {
+    display: flex;
+    margin-bottom: 1rem;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.chat-message.user {
+    justify-content: flex-end;
+}
+
+.chat-message.support,
+.chat-message.trainer {
+    justify-content: flex-start;
+}
+
+.chat-bubble {
+    max-width: 70%;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    word-wrap: break-word;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.chat-message.user .chat-bubble {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border-bottom-right-radius: 4px;
+}
+
+.chat-message.support .chat-bubble {
+    background: #e2e8f0;
+    color: var(--text-dark);
+    border-bottom-left-radius: 4px;
+}
+
+.chat-message.trainer .chat-bubble {
+    background: #dbeafe;
+    color: #1e3a8a;
+    border-bottom-left-radius: 4px;
+    border: 1px solid #bfdbfe;
+}
+
+.chat-timestamp {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    margin-top: 0.25rem;
+    padding: 0 1rem;
+}
+
+/* PDF Export Styles */
+.export-pdf-btn {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.export-pdf-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.export-pdf-btn:active {
+    transform: translateY(0);
+}
+
+/* Email Notification Settings Styles */
+.notification-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.notification-toggle input[type="checkbox"] {
+    cursor: pointer;
+    accent-color: var(--primary-color);
+}
+
+/* Quick Action Buttons Enhancement */
+.quick-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.action-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.action-btn:hover {
+    border-color: var(--primary-color);
+    background: rgba(102, 126, 234, 0.05);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+}
+
+.action-icon {
+    font-size: 1.8rem;
+}
+
+/* Responsive Design for New Features */
+@media (max-width: 768px) {
+    .notification-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .notification-action-btn {
+        width: 100%;
+    }
+
+    .notification-close-btn {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+    }
+
+    #chat-messages {
+        max-height: 300px;
+    }
+
+    .chat-bubble {
+        max-width: 90%;
+    }
+
+    .quick-actions-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    }
+}
+
+/* Animations */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+/* Support Status Indicator */
+.support-status-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #10b981;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}

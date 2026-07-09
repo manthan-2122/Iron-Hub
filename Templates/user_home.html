@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iron Hub - Your Fitness Journey Starts Here</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/user_home.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="home-nav">
+        <div class="nav-container">
+            <div class="nav-logo"><a href="/" style="text-decoration:none;color:inherit;">🏋️ Iron Hub</a></div>
+            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#classes">Classes</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/contact">Contact</a></li>
+                <li class="mobile-only"><a href="/login">Login</a></li>
+                <li class="mobile-only"><a href="/register">Sign Up</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="/login" class="btn btn-outline">Login</a>
+                <a href="/register" class="btn btn-primary">Sign Up</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="hero-content">
+            <div class="hero-badge">🏋️ #1 Gym Management Platform</div>
+            <h1 class="hero-title">Transform Your Body, Transform Your Life</h1>
+            <p class="hero-subtitle">Join Iron Hub today and start your fitness journey with expert trainers,
+                state-of-the-art equipment, and a supportive community.</p>
+            <div class="hero-actions">
+                <a href="/register" class="btn btn-primary btn-large">Get Started Free</a>
+                <a href="#features" class="btn btn-outline btn-large">Learn More</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <div class="hero-placeholder">💪</div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Why Choose Iron Hub?</h2>
+                <p class="section-subtitle">Everything you need to achieve your fitness goals</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">💪</div>
+                    <h3 class="feature-title">Personalized Workouts</h3>
+                    <p class="feature-description">Get custom workout plans designed by professional trainers based on
+                        your goals and fitness level.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">Progress Tracking</h3>
+                    <p class="feature-description">Monitor your progress with detailed tracking of weight, BMI, body
+                        fat, and muscle mass over time.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📅</div>
+                    <h3 class="feature-title">Class Schedules</h3>
+                    <p class="feature-description">Join group fitness classes including Yoga, HIIT, Spin, Zumba, and
+                        more. Book your spot easily.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">✅</div>
+                    <h3 class="feature-title">Attendance Tracking</h3>
+                    <p class="feature-description">Track your gym visits and build consistency with our attendance
+                        system and streak tracking.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💳</div>
+                    <h3 class="feature-title">Easy Payments</h3>
+                    <p class="feature-description">Manage your membership payments seamlessly with secure online payment
+                        options.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔔</div>
+                    <h3 class="feature-title">Stay Updated</h3>
+                    <p class="feature-description">Receive notifications about new workouts, class reminders, and
+                        important updates.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Classes Section -->
+    <section id="classes" class="classes-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Our Classes</h2>
+                <p class="section-subtitle">Find the perfect class for your fitness journey</p>
+            </div>
+            <div class="classes-grid">
+                <div class="class-card">
+                    <div class="class-icon">🧘</div>
+                    <h3 class="class-name">Yoga Flow</h3>
+                    <p class="class-description">Improve flexibility and find inner peace with our yoga classes.</p>
+                </div>
+                <div class="class-card">
+                    <div class="class-icon">⚡</div>
+                    <h3 class="class-name">HIIT Training</h3>
+                    <p class="class-description">High-intensity interval training for maximum calorie burn.</p>
+                </div>
+                <div class="class-card">
+                    <div class="class-icon">🚴</div>
+                    <h3 class="class-name">Spin Class</h3>
+                    <p class="class-description">Cardio-focused cycling classes with energizing music.</p>
+                </div>
+                <div class="class-card">
+                    <div class="class-icon">💃</div>
+                    <h3 class="class-name">Zumba</h3>
+                    <p class="class-description">Dance your way to fitness with fun, Latin-inspired moves.</p>
+                </div>
+                <div class="class-card">
+                    <div class="class-icon">🥊</div>
+                    <h3 class="class-name">Boxing</h3>
+                    <p class="class-description">Learn boxing techniques while getting an intense workout.</p>
+                </div>
+                <div class="class-card">
+                    <div class="class-icon">🏋️</div>
+                    <h3 class="class-name">Strength Training</h3>
+                    <p class="class-description">Build muscle and strength with guided weight training.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">5000+</div>
+                    <div class="stat-label">Active Members</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Expert Trainers</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">20+</div>
+                    <div class="stat-label">Fitness Classes</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Gym Access</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">Ready to Start Your Fitness Journey?</h2>
+                <p class="cta-subtitle">Join thousands of members who are already transforming their lives at Iron Hub.
+                </p>
+                <a href="/register" class="btn btn-primary btn-large">Sign Up Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3 class="footer-title">Iron Hub</h3>
+                    <p class="footer-description">Your premier fitness destination for achieving your health and
+                        wellness goals.</p>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-heading">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#classes">Classes</a></li>
+                        <li><a href="/about">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-heading">Account</h4>
+                    <ul class="footer-links">
+                        <li><a href="/login">Login</a></li>
+                        <li><a href="/register">Register</a></li>
+                        <li><a href="/contact">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-heading">Contact</h4>
+                    <ul class="footer-links">
+                        <li>📧 info@ironhub.com</li>
+                        <li>📞 +1 (555) 123-4567</li>
+                        <li>📍 123 Fitness Street, City, State 12345</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Iron Hub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/static/js/user_home.js"></script>
+</body>
+
+</html>

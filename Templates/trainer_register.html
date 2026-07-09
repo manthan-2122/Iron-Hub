@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trainer Registration - Iron Hub</title>
+    <link rel="stylesheet" href="/static/css/register.css">
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="brand">
+            <span class="brand-icon">🏋️</span>
+            <span class="brand-name">Iron Hub</span>
+        </div>
+        <h2 class="page-title">Trainer Registration</h2>
+        <a href="/" class="back-link">← Back to Home</a>
+
+        <form>
+            <div class="form-row">
+                <div class="form-group" style="flex: 1;">
+                    <label for="fname">First Name</label>
+                    <input type="text" id="fname" class="form-control" placeholder="Jane" required>
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label for="lname">Last Name</label>
+                    <input type="text" id="lname" class="form-control" placeholder="Smith" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" class="form-control" placeholder="jane@ironhub.com" required>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group" style="flex: 1;">
+                    <label for="experience">Experience (Years)</label>
+                    <input type="number" id="experience" class="form-control" placeholder="5" min="0" required>
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label for="specialization">Specialization</label>
+                    <select id="specialization" class="form-control">
+                        <option value="yoga">Yoga</option>
+                        <option value="hiit">HIIT</option>
+                        <option value="strength">Strength</option>
+                        <option value="cardio">Cardio</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" class="form-control" placeholder="Create a password" maxlength="8" minlength="8" required>
+            </div>
+
+            <div class="form-group">
+                <label for="confirm-password">Confirm Password</label>
+                <input type="password" id="confirm-password" class="form-control" placeholder="Confirm your password" maxlength="8" minlength="8" required>
+            </div>
+
+            <div class="form-options">
+                <label class="remember-me">
+                    <input type="checkbox" required> I agree to the <a href="#"
+                        style="color: #667eea; text-decoration: none; margin-left: 4px;">Terms & Conditions</a>
+                </label>
+            </div>
+
+            <button type="submit" class="btn-login">Apply as Trainer</button>
+            <div id="success-message" class="success-message"
+                style="display: none; color: green; margin-top: 10px; text-align: center;">Your account has been created
+                successfully!</div>
+            <div id="password-error" class="error-message"
+                style="display: none; color: red; margin-top: 10px; text-align: center;">Password must be exactly 8 characters.</div>
+            <div id="error-message" class="error-message"
+                style="display: none; color: red; margin-top: 10px; text-align: center;">This email id is already
+                registered.</div>
+        </form>
+
+        <div class="register-link">
+            Already a registered trainer? <a href="/trainer/login">Login here</a>
+        </div>
+
+        <div class="role-switcher">
+            <a href="/register">User</a>
+            <a href="/trainer/register" class="active">Trainer</a>
+            <a href="/admin/register">Admin</a>
+        </div>
+    </div>
+    <script src="/static/js/trainer_register.js"></script>
+</body>
+
+</html>

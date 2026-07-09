@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trainer Dashboard - Iron Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/trainer_dashboard.css">
+</head>
+
+<body>
+    <!-- Mobile Top Navbar -->
+    <nav class="mobile-navbar">
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        
+        <div class="mobile-brand">
+            <span class="brand-icon">🏋️</span>
+            <span class="brand-name">Iron Hub</span>
+        </div>
+        
+        <div class="user-profile mobile-profile" style="cursor: pointer;">
+            <div class="avatar" id="mobile-avatar">T</div>
+            <div class="user-info mobile-user-info">
+                <span class="user-name" id="mobile-user-name">Mike Trainer</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="brand">
+            <span class="brand-icon">🏋️</span>
+            <span class="brand-name">Iron Hub</span>
+        </div>
+
+        <ul class="nav-links">
+            <li class="nav-item">
+                <a href="#dashboard" class="active">
+                    <span class="nav-icon">📊</span>
+                    Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#clients">
+                    <span class="nav-icon">👥</span>
+                    My Clients
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#schedule">
+                    <span class="nav-icon">📅</span>
+                    Schedule
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#workouts">
+                    <span class="nav-icon">📝</span>
+                    Workout Plans
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#settings">
+                    <span class="nav-icon">⚙️</span>
+                    Settings
+                </a>
+            </li>
+        </ul>
+
+        <button class="logout-btn">
+            <span class="nav-icon">🚪</span>
+            Logout
+        </button>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="welcome-text">
+                <h1>Trainer Dashboard</h1>
+                <p class="date" id="current-date">Monday, January 1, 2024</p>
+            </div>
+
+            <div class="user-profile" style="cursor: pointer;">
+                <div class="avatar" id="header-avatar">T</div>
+                <div class="user-info">
+                    <span class="user-name" id="header-user-name">Mike Trainer</span>
+                    <span class="user-role" id="header-user-role">Senior Trainer</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="dashboard-section active">
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: rgba(102, 126, 234, 0.1); color: #667eea;">👥</div>
+                    <div class="stat-info">
+                        <h3 id="stat-active-clients">0</h3>
+                        <span class="stat-label">Active Clients</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">💰</div>
+                    <div class="stat-info">
+                        <h3>$0</h3>
+                        <span class="stat-label">Monthly Earnings</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">📅</div>
+                    <div class="stat-info">
+                        <h3 id="stat-sessions">0</h3>
+                        <span class="stat-label">Sessions This Week</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: rgba(239, 68, 68, 0.1); color: #ef4444;">⭐</div>
+                    <div class="stat-info">
+                        <h3>4.9</h3>
+                        <span class="stat-label">Average Rating</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <!-- Left Column -->
+                <div class="left-column">
+                    <!-- Recent Clients -->
+                    <div class="section-card">
+                        <div class="section-header">
+                            <h2 class="section-title">Active Clients</h2>
+                            <a href="#clients" class="view-all" onclick="document.querySelector('a[href=\'#clients\']').click()">View All</a>
+                        </div>
+
+                        <div class="client-list" id="dashboard-client-list">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="right-column">
+                    <!-- Upcoming Schedule -->
+                    <div class="section-card">
+                        <div class="section-header">
+                            <h2 class="section-title">Today's Schedule</h2>
+                            <a href="#schedule" class="view-all" onclick="document.querySelector('a[href=\'#schedule\']').click()">Full Calendar</a>
+                        </div>
+
+                        <div class="schedule-list" id="dashboard-schedule-list">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="section-card" style="margin-top: 1.5rem;">
+                        <h2 class="section-title" style="margin-bottom: 1rem;">Quick Actions</h2>
+                        <div style="display: grid; gap: 10px;">
+                            <button class="workout-action action-btn" data-modal="planModal" style="background: var(--text-dark);">+ Create
+                                Workout</button>
+                            <button class="workout-action action-btn" data-modal="scheduleModal" style="background: var(--primary-color);">+ Schedule
+                                Session</button>
+                            <button class="workout-action action-btn" data-modal="clientModal" style="background: var(--secondary-color);">+ Add
+                                Client</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trainer Chat Section -->
+            <div class="section-card" style="margin-top: 1.5rem;">
+                <div class="section-header">
+                    <h2 class="section-title">Live Chat Support</h2>
+                    <span style="font-size: 0.85rem; color: var(--text-light);">View client messages and reply directly</span>
+                </div>
+                <div style="display: grid; grid-template-columns: 1.2fr 1.8fr; gap: 1.5rem; min-height: 520px;">
+                    <div style="background: #f8fafc; border-radius: 16px; padding: 1rem; display: flex; flex-direction: column; gap: 1rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <h3 style="margin: 0; font-size: 1rem;">Client Chat Inbox</h3>
+                        </div>
+                        <div id="trainer-chat-users" style="display: grid; gap: 0.75rem; overflow-y: auto; padding-right: 4px;"></div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; background: white; border-radius: 16px; padding: 1rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <div>
+                                <h3 style="margin: 0; font-size: 1rem;">Chat Window</h3>
+                                <p id="trainer-chat-selected" style="margin: 0; color: var(--text-light); font-size: 0.95rem;">Select a user to view messages.</p>
+                            </div>
+                        </div>
+                        <div id="trainer-chat-messages" style="flex: 1; min-height: 320px; max-height: 420px; overflow-y: auto; padding: 1rem; border: 1px solid #e2e8f0; border-radius: 16px; background: #f8fafc; display: flex; flex-direction: column; gap: 0.75rem;"></div>
+                        <div style="display: flex; gap: 0.75rem; margin-top: 1rem;">
+                            <input id="trainer-chat-input" type="text" placeholder="Type your reply..." style="flex: 1; padding: 12px 14px; border: 1px solid #cbd5e1; border-radius: 12px; font-size: 0.95rem;">
+                            <button id="trainer-chat-send-btn" class="action-btn" style="padding: 12px 20px; min-width: 120px;">Send Reply</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Clients Section -->
+        <section id="clients" class="dashboard-section">
+            <div class="section-card">
+                <div class="section-header">
+                    <h2 class="section-title">Client Management</h2>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" placeholder="Search clients..."
+                            style="padding: 8px 12px; border: 1px solid #e2e8f0; border-radius: 8px;">
+                        <button class="workout-action action-btn" data-modal="clientModal" style="padding: 8px 16px;" onclick="openModal('clientModal', true)">+ Add Client</button>
+                    </div>
+                </div>
+
+                <!-- Category Tabs -->
+                <div class="category-tabs" id="client-tabs">
+                    <button class="tab-btn active" data-filter="all">All Clients</button>
+                    <button class="tab-btn" data-filter="Active">Active</button>
+                    <button class="tab-btn" data-filter="Pending">Pending</button>
+                </div>
+
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left;" class="clients-table">
+                        <thead style="background: #f8fafc;">
+                            <tr>
+                                <th style="padding: 1rem; color: var(--text-light); font-weight: 600;">Client Name</th>
+                                <th style="padding: 1rem; color: var(--text-light); font-weight: 600;">Current Plan</th>
+                                <th style="padding: 1rem; color: var(--text-light); font-weight: 600;">Phone</th>
+                                <th style="padding: 1rem; color: var(--text-light); font-weight: 600;">Status</th>
+                                <th style="padding: 1rem; color: var(--text-light); font-weight: 600;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="clients-tbody">
+                            <!-- Example row structure for mobile -->
+                            <!-- <tr>
+                                <td data-label="Client Name">John Doe</td>
+                                <td data-label="Current Plan">Premium Plan</td>
+                                <td data-label="Phone">+1 234 567 8900</td>
+                                <td data-label="Status"><span class="status-badge">Active</span></td>
+                                <td data-label="Actions"><button class="action-btn">Edit</button></td>
+                            </tr> -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Schedule Section -->
+        <section id="schedule" class="dashboard-section">
+            <div class="content-grid">
+                <div class="section-card">
+                    <div class="section-header">
+                        <h2 class="section-title">Weekly Calendar</h2>
+                        <button class="workout-action action-btn" data-modal="scheduleModal" onclick="openModal('scheduleModal', true)">+ New Appointment</button>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; text-align: center; margin-bottom: 10px;">
+                        <div style="font-weight: 600; padding: 10px; background: #f1f5f9; border-radius: 8px;">Mon</div>
+                        <div style="font-weight: 600; padding: 10px; background: #f1f5f9; border-radius: 8px;">Tue</div>
+                        <div style="font-weight: 600; padding: 10px; background: #f1f5f9; border-radius: 8px;">Wed</div>
+                        <div style="font-weight: 600; padding: 10px; background: #f1f5f9; border-radius: 8px;">Thu</div>
+                        <div style="font-weight: 600; padding: 10px; background: #f1f5f9; border-radius: 8px;">Fri</div>
+                        <div style="font-weight: 600; padding: 10px; background: #f1f5f9; border-radius: 8px;">Sat</div>
+                        <div style="font-weight: 600; padding: 10px; background: #f1f5f9; border-radius: 8px;">Sun</div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; text-align: center;" id="weekly-calendar">
+                        <!-- Populated by JS -->
+                        <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; min-height: 80px;"></div>
+                        <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; min-height: 80px;"></div>
+                        <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; min-height: 80px;"></div>
+                        <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; min-height: 80px;"></div>
+                        <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; min-height: 80px;"></div>
+                        <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; min-height: 80px;"></div>
+                        <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; min-height: 80px;"></div>
+                    </div>
+                </div>
+
+                <div class="section-card">
+                    <h2 class="section-title" style="margin-bottom: 1rem;">All Sessions</h2>
+                    <div class="schedule-list" id="upcoming-schedule-list">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Workouts Section -->
+        <section id="workouts" class="dashboard-section">
+            <div class="section-header">
+                <h2 class="section-title">Workout Plans</h2>
+                <button class="workout-action action-btn" data-modal="planModal" onclick="openModal('planModal', true)">+ Create New Plan</button>
+            </div>
+
+            <!-- Category Tabs -->
+            <div class="category-tabs" id="workout-tabs">
+                <button class="tab-btn active" data-filter="all">All Plans</button>
+                <button class="tab-btn" data-filter="Beginner">Beginner</button>
+                <button class="tab-btn" data-filter="Intermediate">Intermediate</button>
+                <button class="tab-btn" data-filter="Advanced">Advanced</button>
+            </div>
+
+            <div class="stats-grid" id="workout-grid">
+                <!-- Populated by JavaScript -->
+            </div>
+        </section>
+
+
+
+        <section id="settings" class="dashboard-section">
+
+            <!-- Settings Section Header (same pattern as Workout Plans) -->
+            <div class="section-header" style="margin-bottom: 1.5rem;">
+                <h2 class="section-title">Account Settings</h2>
+                <button class="workout-action action-btn" onclick="handleSaveAllSettings()">💾 Save All Changes</button>
+            </div>
+
+            <!-- Row 1: Profile + Availability (content-grid style 2-col) -->
+            <div class="content-grid" style="margin-bottom: 1.5rem;">
+
+                <!-- Profile Information -->
+                <div class="section-card">
+                    <div class="section-header">
+                        <h2 class="section-title">👤 Profile Information</h2>
+                    </div>
+                    <form class="modal-form" id="profileSettingsForm" onsubmit="handleProfileSettingsSave(event)">
+                        <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                            <div style="flex: 1;">
+                                <label>First Name</label>
+                                <input type="text" id="s-firstname" placeholder="First name" required>
+                            </div>
+                            <div style="flex: 1;">
+                                <label>Last Name</label>
+                                <input type="text" id="s-lastname" placeholder="Last name" required>
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 1rem;">
+                            <label>Email Address</label>
+                            <input type="email" id="s-email" placeholder="you@example.com" readonly style="background: #f1f5f9; cursor: not-allowed;">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 1rem;">
+                            <label>Phone Number</label>
+                            <input type="tel" id="s-phone" placeholder="+1 234 567 8900">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 1rem;">
+                            <label>Specialization</label>
+                            <input type="text" id="s-specializations" placeholder="e.g. Weight Loss, Strength Training" required>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 1rem;">
+                            <label>Years of Experience</label>
+                            <input type="number" id="s-experience" placeholder="0" min="0" required>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 1rem;">
+                            <label>Certifications</label>
+                            <input type="text" id="s-certifications" placeholder="e.g. ACE, NASM, ISSA">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 1rem;">
+                            <label>Hourly Rate ($)</label>
+                            <input type="number" id="s-hourly-rate" placeholder="50" min="0" step="0.01">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 1rem;">
+                            <label>Availability Status</label>
+                            <select id="s-availability">
+                                <option value="Available">Available</option>
+                                <option value="Busy">Busy</option>
+                                <option value="On Leave">On Leave</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label>Bio</label>
+                            <textarea id="s-bio" rows="3" placeholder="Tell us about yourself..."></textarea>
+                        </div>
+                        <button type="submit" class="workout-action action-btn" style="width: 100%;">Save Profile</button>
+                    </form>
+                </div>
+
+                <!-- Right column: Availability + Security stacked -->
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+
+                    <!-- Availability & Rates -->
+                    <div class="section-card">
+                        <div class="section-header">
+                            <h2 class="section-title">📅 Availability & Rates</h2>
+                        </div>
+                        <form class="modal-form" onsubmit="handleAvailabilitySave(event)">
+                            <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                                <div style="flex: 1;">
+                                    <label>Hourly Rate ($)</label>
+                                    <input type="number" id="s-hourly-rate" value="50" min="0">
+                                </div>
+                                <div style="flex: 1;">
+                                    <label>Package Rate ($)</label>
+                                    <input type="number" id="s-package-rate" value="400" min="0">
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 1rem;">
+                                <label>Availability Status</label>
+                                <select id="s-availability-status">
+                                    <option value="accepting">✅ Accepting New Clients</option>
+                                    <option value="full">⛔ Fully Booked</option>
+                                    <option value="leave">🏖️ On Leave</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 1rem;">
+                                <label>Working Days</label>
+                                <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px;">
+                                    <button type="button" class="tab-btn active" data-day="Mon">Mon</button>
+                                    <button type="button" class="tab-btn active" data-day="Tue">Tue</button>
+                                    <button type="button" class="tab-btn active" data-day="Wed">Wed</button>
+                                    <button type="button" class="tab-btn active" data-day="Thu">Thu</button>
+                                    <button type="button" class="tab-btn active" data-day="Fri">Fri</button>
+                                    <button type="button" class="tab-btn" data-day="Sat">Sat</button>
+                                    <button type="button" class="tab-btn" data-day="Sun">Sun</button>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+                                <div style="flex: 1;">
+                                    <label>Start Time</label>
+                                    <input type="time" id="s-start-time" value="09:00">
+                                </div>
+                                <div style="flex: 1;">
+                                    <label>End Time</label>
+                                    <input type="time" id="s-end-time" value="18:00">
+                                </div>
+                            </div>
+                            <button type="submit" class="workout-action action-btn" style="width: 100%;">Update Availability</button>
+                        </form>
+                    </div>
+
+                    <!-- Security / Password -->
+                    <div class="section-card">
+                        <div class="section-header">
+                            <h2 class="section-title">🔒 Change Password</h2>
+                        </div>
+                        <form class="modal-form" onsubmit="handlePasswordChange(event)">
+                            <div class="form-group" style="margin-bottom: 1rem;">
+                                <label>Current Password</label>
+                                <input type="password" id="s-current-pw" placeholder="••••••••">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 1rem;">
+                                <label>New Password</label>
+                                <input type="password" id="s-new-pw" placeholder="Min 8 characters">
+                                <!-- Password strength bar -->
+                                <div id="pw-strength-bar" style="height:5px; background:#e2e8f0; border-radius:99px; margin-top:8px; display:none;">
+                                    <div id="pw-bar-fill" style="height:100%; border-radius:99px; width:0%; background:var(--danger); transition: width 0.4s, background 0.4s;"></div>
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 1.5rem;">
+                                <label>Confirm New Password</label>
+                                <input type="password" id="s-confirm-pw" placeholder="Repeat new password">
+                            </div>
+                            <button type="submit" class="workout-action action-btn" style="width: 100%; background: var(--success);">Update Password</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Row 2: Notifications + Danger Zone (content-grid style 2-col) -->
+            <div class="content-grid">
+
+                <!-- Notifications -->
+                <div class="section-card">
+                    <div class="section-header">
+                        <h2 class="section-title">🔔 Notification Preferences</h2>
+                    </div>
+                    <div>
+                        <!-- Toggle rows re-using client-item style for consistency -->
+                        <div class="client-item">
+                            <div class="client-info">
+                                <span class="client-name">New Session Bookings</span>
+                                <span class="client-plan">Get notified when a client books a new session</span>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-track"></span>
+                            </label>
+                        </div>
+                        <div class="client-item">
+                            <div class="client-info">
+                                <span class="client-name">Session Reminders</span>
+                                <span class="client-plan">Reminder 1 hour before each session</span>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-track"></span>
+                            </label>
+                        </div>
+                        <div class="client-item">
+                            <div class="client-info">
+                                <span class="client-name">Client Messages</span>
+                                <span class="client-plan">Receive alerts for new client messages</span>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-track"></span>
+                            </label>
+                        </div>
+                        <div class="client-item">
+                            <div class="client-info">
+                                <span class="client-name">Payment Received</span>
+                                <span class="client-plan">Notification on each payment confirmation</span>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-track"></span>
+                            </label>
+                        </div>
+                        <div class="client-item" style="border-bottom: none;">
+                            <div class="client-info">
+                                <span class="client-name">Weekly Summary Report</span>
+                                <span class="client-plan">Get a weekly email summary every Monday</span>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox">
+                                <span class="toggle-track"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Danger Zone -->
+                <div class="section-card">
+                    <div class="section-header">
+                        <h2 class="section-title" style="color: var(--danger);">⚠️ Danger Zone</h2>
+                    </div>
+                    <!-- Deactivate -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: #fffbeb; border: 1px solid #fcd34d; border-radius: 12px; margin-bottom: 1rem;">
+                        <div>
+                            <div style="font-weight: 600; color: var(--text-dark); font-size: 0.95rem;">Deactivate Account</div>
+                            <div style="font-size: 0.82rem; color: var(--text-light); margin-top: 3px;">Temporarily hide your profile from the platform</div>
+                        </div>
+                        <button class="action-btn" style="background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; flex-shrink: 0;" onclick="showToast('Account deactivation requires admin approval.', 'info')">Deactivate</button>
+                    </div>
+                    <!-- Delete -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: #fff5f5; border: 1px solid #fca5a5; border-radius: 12px;">
+                        <div>
+                            <div style="font-weight: 600; color: var(--danger); font-size: 0.95rem;">Delete Account Permanently</div>
+                            <div style="font-size: 0.82rem; color: var(--text-light); margin-top: 3px;">All data will be erased. This cannot be undone.</div>
+                        </div>
+                        <button class="action-btn" style="background: #fee2e2; color: var(--danger); border: 1px solid #fca5a5; flex-shrink: 0;" onclick="showToast('Please contact admin to delete your account.', 'error')">Delete</button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- UI Overlay Components (Toast & Modals) -->
+    
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Modals -->
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content" style="max-width: 400px; text-align: center;">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">🗑️</div>
+            <h2 style="margin-bottom: 1rem; color: var(--text-dark);">Confirm Deletion</h2>
+            <p style="color: var(--text-light); margin-bottom: 2rem;">Are you sure you want to delete this item? This action cannot be undone.</p>
+            <div style="display: flex; gap: 10px; justify-content: center;">
+                <button class="action-btn" style="background: #e2e8f0; color: var(--text-dark);" onclick="closeModal('deleteModal')">Cancel</button>
+                <button class="action-btn" id="confirmDeleteBtn" style="background: var(--danger);">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Client Modal -->
+    <div id="clientModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="clientModalTitle">Add New Client</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form class="modal-form" id="clientForm">
+                    <input type="hidden" id="client-id">
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <label>Client Name (Username)</label>
+                        <input type="text" id="client-name" required placeholder="e.g. JaneDoe123" style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 1rem;">
+                        <small style="color: var(--text-light); font-size: 0.75rem;">Username only (no spaces allowed)</small>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 1rem;" id="client-email-group">
+                        <label>Email Address</label>
+                        <input type="email" id="client-email" placeholder="jane@example.com" style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 1rem;">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 1rem;" id="client-password-group">
+                        <label>Password (For new clients)</label>
+                        <input type="password" id="client-password" placeholder="********" style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 1rem;">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <label>Phone</label>
+                        <input type="tel" id="client-phone" required placeholder="1234567890" style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 1rem;">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <label>Address</label>
+                        <input type="text" id="client-address" required placeholder="123 Main St" style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 1rem;">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <label>Status</label>
+                        <select id="client-status" required style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 1rem;">
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                            <option value="Expired">Expired</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="workout-action action-btn" style="width:100%">Save Client</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Schedule Modal -->
+    <div id="scheduleModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="scheduleModalTitle">Schedule Session</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form class="modal-form" id="scheduleForm">
+                    <input type="hidden" id="schedule-id">
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <label>Select Client</label>
+                        <select id="schedule-client" required style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 1rem;">
+                            <option value="">-- Choose a Client --</option>
+                            <!-- Populated by JavaScript -->
+                        </select>
+                        <small style="color: var(--text-light); font-size: 0.75rem; margin-top: 0.5rem; display: block;">Select from your active clients</small>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <label>Session Type</label>
+                        <select id="schedule-type" style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 1rem;">
+                            <option value="">Standard Session</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <label>Date & Time</label>
+                        <input type="datetime-local" id="schedule-datetime" required style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 1rem;">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <label>Notes</label>
+                        <textarea id="schedule-notes" rows="2" placeholder="Optional notes..." style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 1rem; resize: vertical;"></textarea>
+                    </div>
+                    <button type="submit" class="workout-action action-btn" style="width:100%">Confirm Session</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Plan Modal -->
+    <div id="planModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="planModalTitle">Create Workout Plan</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form class="modal-form" id="planForm">
+                    <input type="hidden" id="plan-id">
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <label>Plan Name</label>
+                        <input type="text" id="plan-name" required placeholder="e.g. 30 Day Shred">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <label>Description</label>
+                        <textarea id="plan-description" required placeholder="Describe the plan..."></textarea>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <label>Category / Difficulty</label>
+                        <select id="plan-difficulty" required>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Intermediate">Intermediate</option>
+                            <option value="Advanced">Advanced</option>
+                        </select>
+                    </div>
+                    <div style="display: flex; gap: 10px; margin-bottom: 1rem;">
+                        <div class="form-group" style="flex:1;">
+                            <label>Duration (min)</label>
+                            <input type="number" id="plan-duration" required placeholder="45">
+                        </div>
+                        <div class="form-group" style="flex:1;">
+                            <label>Calories</label>
+                            <input type="number" id="plan-calories" required placeholder="300">
+                        </div>
+                    </div>
+                    <button type="submit" class="workout-action action-btn" style="width:100%">Save Plan</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="/static/js/trainer_dashboard.js"></script>
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.querySelector('.sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        
+        function toggleSidebar() {
+            sidebar.classList.toggle('open');
+            sidebarOverlay.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+            document.body.style.overflow = sidebar.classList.contains('open') ? 'hidden' : '';
+        }
+        
+        menuToggle?.addEventListener('click', toggleSidebar);
+        sidebarOverlay?.addEventListener('click', toggleSidebar);
+        
+        // Close sidebar when clicking nav links on mobile
+        document.querySelectorAll('.nav-item a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    toggleSidebar();
+                }
+            });
+        });
+        
+        // Sync mobile avatar and name with header
+        const headerAvatar = document.getElementById('header-avatar');
+        const mobileAvatar = document.getElementById('mobile-avatar');
+        const headerUserName = document.getElementById('header-user-name');
+        const mobileUserName = document.getElementById('mobile-user-name');
+        
+        if (headerAvatar && mobileAvatar) {
+            mobileAvatar.textContent = headerAvatar.textContent;
+            mobileAvatar.style.background = headerAvatar.style.background || 
+                getComputedStyle(headerAvatar).background;
+        }
+        
+        if (headerUserName && mobileUserName) {
+            mobileUserName.textContent = headerUserName.textContent;
+        }
+        
+        // Close sidebar on ESC key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+                toggleSidebar();
+            }
+        });
+    </script>
+</body>
+
+</html>
