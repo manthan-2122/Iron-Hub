@@ -31,7 +31,7 @@ body {
 }
 
 body {
-    background: #f1f5f9;
+    background: rgba(255, 255, 255, 0.05) !important;
     min-height: 100vh;
     display: flex;
     overflow-x: hidden;
@@ -45,7 +45,7 @@ body {
     left: 0;
     right: 0;
     height: 60px;
-    background: white;
+    background: rgba(20, 20, 35, 0.6) !important;
     z-index: 1001;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     align-items: center;
@@ -139,7 +139,7 @@ body {
 /* Sidebar */
 .sidebar {
     width: var(--sidebar-width);
-    background: white;
+    background: rgba(20, 20, 35, 0.6) !important;
     height: 100vh;
     position: fixed;
     left: 0;
@@ -147,7 +147,7 @@ body {
     padding: 2rem;
     display: flex;
     flex-direction: column;
-    border-right: 1px solid #e2e8f0;
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
     z-index: 100;
 }
 
@@ -258,7 +258,7 @@ body {
     display: flex;
     align-items: center;
     gap: 12px;
-    background: white;
+    background: rgba(20, 20, 35, 0.6) !important;
     padding: 8px 16px;
     border-radius: 50px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
@@ -302,7 +302,7 @@ body {
 }
 
 .stat-card {
-    background: white;
+    background: rgba(20, 20, 35, 0.6) !important;
     padding: 1.5rem;
     border-radius: 20px;
     display: flex;
@@ -362,8 +362,8 @@ body {
 }
 
 .action-btn {
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08);
     padding: 1rem;
     border-radius: 16px;
     display: flex;
@@ -375,7 +375,7 @@ body {
 }
 
 .action-btn:hover {
-    background: white;
+    background: rgba(20, 20, 35, 0.6) !important;
     border-color: var(--primary-color);
     box-shadow: 0 4px 6px -1px rgba(102, 126, 234, 0.1);
     transform: translateY(-2px);
@@ -407,7 +407,7 @@ body {
 
 .progress-bar {
     height: 8px;
-    background: #f1f5f9;
+    background: rgba(255, 255, 255, 0.05) !important;
     border-radius: 10px;
     overflow: hidden;
 }
@@ -419,7 +419,7 @@ body {
 }
 
 .goal-count {
-    background: #f1f5f9;
+    background: rgba(255, 255, 255, 0.05) !important;
     padding: 4px 10px;
     border-radius: 20px;
     font-size: 0.8rem;
@@ -438,7 +438,7 @@ body {
 
 /* Today's Workout */
 .section-card {
-    background: white;
+    background: rgba(20, 20, 35, 0.6) !important;
     border-radius: 20px;
     padding: 1.5rem;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
@@ -471,7 +471,7 @@ body {
     display: flex;
     align-items: center;
     padding: 1rem;
-    border: 1px solid #e2e8f0;
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 12px;
     margin-bottom: 1rem;
     transition: all 0.3s;
@@ -484,7 +484,7 @@ body {
 
 .workout-icon {
     font-size: 1.5rem;
-    background: #f8f9fa;
+    background: rgba(255, 255, 255, 0.05) !important;
     width: 48px;
     height: 48px;
     display: flex;
@@ -528,7 +528,7 @@ body {
 
 /* Progress Chart area */
 .progress-section {
-    background: white;
+    background: rgba(20, 20, 35, 0.6) !important;
     border-radius: 20px;
     padding: 1.5rem;
     margin-top: 1.5rem;
@@ -541,11 +541,11 @@ body {
     align-items: flex-start;
     padding-bottom: 1rem;
     margin-bottom: 1rem;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .class-time {
-    background: #f1f5f9;
+    background: rgba(255, 255, 255, 0.05) !important;
     padding: 8px;
     border-radius: 8px;
     text-align: center;
@@ -855,7 +855,7 @@ body {
     #measurement-form-container {
         padding: 1.25rem 1rem;
         border-radius: 12px;
-        background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08));
     }
     
     #measurement-form-container h3 {
@@ -883,8 +883,8 @@ body {
         padding: 12px 14px;
         font-size: 16px !important;
         border-radius: 10px;
-        border: 1.5px solid #e2e8f0;
-        background: white;
+        border: 1.5px solid rgba(255, 255, 255, 0.08);
+        background: rgba(20, 20, 35, 0.6) !important;
         transition: all 0.2s;
     }
     
@@ -917,9 +917,9 @@ body {
     }
     
     #measurement-form-container button[type="button"] {
-        background: white;
+        background: rgba(20, 20, 35, 0.6) !important;
         color: var(--text-dark);
-        border: 1.5px solid #e2e8f0;
+        border: 1.5px solid rgba(255, 255, 255, 0.08);
     }
     
     /* Make tables horizontally scrollable */
@@ -933,8 +933,8 @@ body {
     }
     
     .measurements-log .table-container {
-        background: white;
-        box-shadow: inset 0 0 0 1px #e2e8f0;
+        background: rgba(20, 20, 35, 0.6) !important;
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
     }
     
     #measurements-tbody tr {
@@ -954,14 +954,14 @@ body {
     }
     
     #measurements-tbody tr:hover td:first-child {
-        background: #f8fafc;
+        background: rgba(255, 255, 255, 0.05) !important;
     }
     
     /* Table Headers */
     .measurements-log table thead th {
         font-size: 0.8rem;
         padding: 0.9rem 0.6rem;
-        background: #f8fafc;
+        background: rgba(255, 255, 255, 0.05) !important;
     }
     
     /* Streak Card Mobile */
@@ -2165,7 +2165,7 @@ body {
 }
 
 .modal-content {
-    background: white;
+    background: rgba(20, 20, 35, 0.6) !important;
     padding: 2rem;
     border-radius: 20px;
     width: 90%;
@@ -2201,8 +2201,8 @@ body {
 }
 
 .option-card {
-    background: #f8fafc;
-    border: 2px solid #e2e8f0;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 2px solid rgba(255, 255, 255, 0.08);
     padding: 1.5rem;
     border-radius: 16px;
     display: flex;
@@ -2246,7 +2246,7 @@ body {
     gap: 12px;
     padding: 14px 20px;
     border-radius: 14px;
-    background: white;
+    background: rgba(20, 20, 35, 0.6) !important;
     box-shadow: 0 10px 30px rgba(0,0,0,0.12);
     font-size: 0.9rem;
     font-weight: 500;
@@ -2320,7 +2320,7 @@ body {
 
 .measurements-log table thead th {
     position: static !important;
-    background: #f8fafc;
+    background: rgba(255, 255, 255, 0.05) !important;
     white-space: nowrap;
 }
 
@@ -2349,7 +2349,7 @@ body {
 }
 
 .measurements-log .table-container::-webkit-scrollbar-track {
-    background: #f1f5f9;
+    background: rgba(255, 255, 255, 0.05) !important;
     border-radius: 5px;
 }
 
@@ -2367,7 +2367,7 @@ body {
 }
 
 #measurements-tbody tr:hover {
-    background: #f8fafc;
+    background: rgba(255, 255, 255, 0.05) !important;
 }
 
 #measurements-tbody td {
@@ -2398,18 +2398,18 @@ body {
 
 /* Streak Card Styling */
 .streak-container {
-    background: linear-gradient(135deg, #fefce8, #fef3c7);
+    background: rgba(255, 255, 255, 0.05);
     padding: 3rem 2rem;
     border-radius: 16px;
     text-align: center;
-    border: 2px solid #fef08a;
-    box-shadow: 0 4px 12px rgba(202, 138, 4, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s;
 }
 
 .streak-container:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(202, 138, 4, 0.15);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
 }
 
 /* ===== Subscription Section Specific ===== */
@@ -2465,7 +2465,7 @@ body {
 }
 
 #subscription-history-tbody tr:hover {
-    background: #f8fafc;
+    background: rgba(255, 255, 255, 0.05) !important;
 }
 
 #subscription-history-tbody td {
@@ -2493,7 +2493,7 @@ table tbody td span[style*="border-radius: 20px"] {
     font-size: 0.75rem;
     font-weight: 600;
     color: var(--primary-color);
-    background: white;
+    background: rgba(20, 20, 35, 0.6) !important;
     padding: 4px 8px;
     border-radius: 4px;
     opacity: 0;
@@ -2527,7 +2527,7 @@ table tbody td span[style*="border-radius: 20px"] {
     }
     
     .table-container::-webkit-scrollbar-track {
-        background: #f1f5f9;
+        background: rgba(255, 255, 255, 0.05) !important;
         border-radius: 3px;
     }
     
@@ -2551,8 +2551,8 @@ table tbody td span[style*="border-radius: 20px"] {
 }
 
 .sub-plan-card {
-    background: white;
-    border: 2px solid #e2e8f0;
+    background: rgba(20, 20, 35, 0.6) !important;
+    border: 2px solid rgba(255, 255, 255, 0.08);
     border-radius: 20px;
     padding: 2rem 1.5rem;
     display: flex;
@@ -2612,8 +2612,8 @@ table tbody td span[style*="border-radius: 20px"] {
 .sub-plan-price {
     text-align: center;
     padding: 1rem 0;
-    border-top: 1px solid #f1f5f9;
-    border-bottom: 1px solid #f1f5f9;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .sub-price-amount {
@@ -2740,10 +2740,10 @@ table tbody td span[style*="border-radius: 20px"] {
 .modal-form-group textarea {
     width: 100%;
     padding: 10px 14px;
-    border: 1.5px solid #e2e8f0;
+    border: 1.5px solid rgba(255, 255, 255, 0.08);
     border-radius: 10px;
     font-size: 0.93rem;
-    background: #f8fafc;
+    background: rgba(255, 255, 255, 0.05) !important;
     color: var(--text-dark);
     transition: border-color 0.2s, box-shadow 0.2s;
     outline: none;
@@ -2753,7 +2753,7 @@ table tbody td span[style*="border-radius: 20px"] {
 .modal-form-group textarea:focus {
     border-color: var(--primary-color);
     box-shadow: 0 0 0 3px rgba(102,126,234,0.12);
-    background: white;
+    background: rgba(20, 20, 35, 0.6) !important;
 }
 .modal-form-row {
     display: flex;
@@ -2777,22 +2777,22 @@ table tbody td span[style*="border-radius: 20px"] {
 }
 .modal-btn-secondary {
     padding: 11px 20px;
-    background: #f1f5f9;
+    background: rgba(255, 255, 255, 0.05) !important;
     color: var(--text-dark);
-    border: 1.5px solid #e2e8f0;
+    border: 1.5px solid rgba(255, 255, 255, 0.08);
     border-radius: 10px;
     font-weight: 600;
     cursor: pointer;
     transition: background 0.2s;
 }
-.modal-btn-secondary:hover { background: #e2e8f0; }
+.modal-btn-secondary:hover { background: rgba(255, 255, 255, 0.08); }
 
 .modal-footer {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
     padding-top: 1rem;
-    border-top: 1px solid #f1f5f9;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
     margin-top: 0.75rem;
 }
 
@@ -2881,3 +2881,125 @@ img, video, iframe {
         min-width: 100%;
     }
 }
+
+
+/* --- AI Theme Global Override --- */
+:root {
+    --primary-color: #8b5cf6 !important;
+    --secondary-color: #3b82f6 !important;
+    --bg-color: #0b0a15 !important;
+    --card-bg: rgba(20, 20, 35, 0.5) !important;
+    --glass-border: rgba(255, 255, 255, 0.08) !important;
+    --text-primary: #ffffff !important;
+    --text-secondary: #94a3b8 !important;
+    --text-dark: #ffffff !important;
+    --text-light: #94a3b8 !important;
+    --glow-color: rgba(139, 92, 246, 0.4) !important;
+    --glass-bg: rgba(20, 20, 35, 0.7) !important;
+}
+body {
+    background: #0b0a15 !important;
+    color: #ffffff !important;
+    position: relative !important;
+}
+body::before, body::after {
+    content: '';
+    position: fixed;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    filter: blur(200px);
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.4;
+}
+body::before { top: -200px; left: -200px; background: #8b5cf6; }
+body::after { bottom: -200px; right: -200px; background: #3b82f6; }
+
+/* Enforce dark glassmorphism on ALL containers */
+.login-container, .register-container, .section-card, .stat-card, .sidebar, .header, .card, .profile-card, .quick-actions-grid .action-btn, .mobile-navbar, .table-container, .client-card, .workout-item, .class-item {
+    background: rgba(20, 20, 35, 0.5) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    backdrop-filter: blur(20px) !important;
+    color: #ffffff !important;
+}
+
+/* Fix text colors */
+h1, h2, h3, h4, h5, h6, .page-title, label, .workout-title, .user-name, .time, .brand-name {
+    color: #ffffff !important;
+}
+.text-muted, .text-light, .workout-meta, .stat-label, .date, .user-role {
+    color: #94a3b8 !important;
+}
+
+/* Force Table dark mode */
+table, thead, tbody, tr, th, td {
+    background-color: transparent !important;
+    background: transparent !important;
+    color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+thead, th, thead tr {
+    background: rgba(139, 92, 246, 0.1) !important;
+}
+tr {
+    background: rgba(20, 20, 35, 0.4) !important;
+}
+tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.02) !important;
+}
+
+/* Override any hardcoded white backgrounds that might be in row 1 or other places */
+[class*="bg-white"], .bg-white {
+    background-color: transparent !important;
+    background: transparent !important;
+}
+
+/* Fix form elements and dropdown options */
+.form-control, input, select, textarea {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+}
+select option {
+    background: #1a1a2e !important;
+    color: #ffffff !important;
+}
+.form-control:focus, input:focus {
+    border-color: #8b5cf6 !important;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2) !important;
+}
+
+/* Fix all pills, filters, secondary buttons that were white */
+/* We target common utility classes used for these pills */
+.filter-btn, .pill, .badge, .status-badge, .tab-btn, .btn:not(.btn-primary), button:not(.btn-primary) {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+.filter-btn.active, .pill.active, .tab-btn.active, .btn-primary {
+    background: linear-gradient(135deg, #8b5cf6, #3b82f6) !important;
+    color: #ffffff !important;
+    border: none !important;
+}
+
+/* Calendar specifically */
+.calendar-day, .calendar-item, .time-slot, .day-cell, .schedule-item {
+    background: rgba(20, 20, 35, 0.6) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    color: #ffffff !important;
+}
+
+/* Fix any remaining inline styles or specific IDs with white backgrounds */
+div[style*="background: rgba(20, 20, 35, 0.6) !important"], div[style*="background-color: rgba(20, 20, 35, 0.6) !important"], div[style*="background-color: rgba(20, 20, 35, 0.6) !important"], div[style*="background: rgba(20, 20, 35, 0.6) !important"] {
+    background: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* FINAL CATCH-ALL FOR REMAINING WHITE BACKGROUNDS */
+.list-group-item, li, ul, .modal, .modal-content, .modal-dialog, .popup, .dialog, .dropdown-menu, .dropdown-item, .client-list, .client-item, .checkbox-group, .select-group, [class*="bg-white"], [class*="bg-light"] {
+    background-color: rgba(20, 20, 35, 0.5) !important;
+    background: rgba(20, 20, 35, 0.5) !important;
+    color: #ffffff !important;
+}
+
+.dashboard-header { border: none !important; }

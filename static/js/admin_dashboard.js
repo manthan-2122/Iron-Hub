@@ -435,7 +435,7 @@ function displayClientCheckboxes(trainerId) {
     
     container.innerHTML = availableClients.map(client => {
         return `
-            <div style="display: flex; align-items: center; gap: 10px; padding: 8px; border-bottom: 1px solid #e2e8f0;">
+            <div style="display: flex; align-items: center; gap: 10px; padding: 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
                 <input type="checkbox" id="client-${client.id}" value="${client.id}" 
                     style="width: 18px; height: 18px; cursor: pointer;">
                 <label for="client-${client.id}" style="cursor: pointer; flex: 1;">

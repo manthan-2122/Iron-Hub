@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const table = container.querySelector('table');
             if (table && table.offsetWidth > container.offsetWidth) {
                 container.classList.add('show-scroll-hint');
-                
+
                 // Remove hint after first scroll
                 container.addEventListener('scroll', function removeHint() {
                     container.classList.remove('show-scroll-hint');
@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Check for scroll hints on load and resize
     window.addEventListener('load', addScrollHints);
     window.addEventListener('resize', addScrollHints);
-    
+
     // Re-check after dynamic content loads
     setTimeout(addScrollHints, 1000);
 
@@ -106,18 +106,18 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     const updateDashboardStats = async (history, weight) => {
-        const totalCal  = history.reduce((sum, h) => sum + (Number(h.calories_burned) || 0), 0);
+        const totalCal = history.reduce((sum, h) => sum + (Number(h.calories_burned) || 0), 0);
         const totalSecs = history.reduce((sum, h) => {
             const s = h.duration_seconds != null ? Number(h.duration_seconds)
-                    : h.duration_minutes  != null ? Number(h.duration_minutes) * 60 : 0;
+                : h.duration_minutes != null ? Number(h.duration_minutes) * 60 : 0;
             return sum + s;
         }, 0);
-        const calEl    = document.getElementById('stat-calories');
-        const timeEl   = document.getElementById('stat-workout-time');
+        const calEl = document.getElementById('stat-calories');
+        const timeEl = document.getElementById('stat-workout-time');
         const weightEl = document.getElementById('stat-weight');
-        if (calEl)    calEl.textContent    = totalCal  ? totalCal + ' kcal' : '--';
-        if (timeEl)   timeEl.textContent   = totalSecs ? fmtDuration(totalSecs) : '--';
-        
+        if (calEl) calEl.textContent = totalCal ? totalCal + ' kcal' : '--';
+        if (timeEl) timeEl.textContent = totalSecs ? fmtDuration(totalSecs) : '--';
+
         // Get today's weight from measurements
         if (weightEl) {
             try {
@@ -166,7 +166,7 @@ document.addEventListener('DOMContentLoaded', function () {
             this.classList.add('active');
             const targetId = this.getAttribute('href').substring(1);
             sections.forEach(s => s.classList.toggle('active', s.id === targetId));
-            const titles = { profile: 'My Profile', workouts: 'My Workouts', diet: 'Diet Plan', progress: 'My Progress', subscription: 'Subscription Plans', settings: 'Settings' };
+            const titles = { profile: 'My Profile', workouts: 'My Workouts', diet: 'Diet Plan', progress: 'My Progress', bmi: 'BMI Calculator', chat: 'Live Chat', subscription: 'Subscription Plans', payment: 'Payment', settings: 'Settings' };
             const h = document.querySelector('.welcome-text h1');
             if (h) {
                 if (targetId === 'dashboard') {
@@ -237,7 +237,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const workoutName = document.getElementById('timer-workout-name').textContent.replace('🏋️ ', '');
         const caloriesBurned = Math.round(currentTimerCalories * (elapsedSeconds / timerTotalSeconds));
-        
+
         console.log('📝 Logging workout to history:', {
             workout_plan_id: currentTimerPlanId,
             workout_name: workoutName,
@@ -264,26 +264,26 @@ document.addEventListener('DOMContentLoaded', function () {
                         update_if_exists: true
                     })
                 });
-                
+
                 if (res.ok) {
                     const result = await res.json();
                     console.log('✅ Workout logged successfully:', result);
-                    
+
                     if (isComplete) {
-                        fetch(`/api/user/workout-progress/${currentTimerPlanId}`, { 
-                            method: 'DELETE', 
-                            credentials: 'same-origin' 
-                        }).catch(() => {});
+                        fetch(`/api/user/workout-progress/${currentTimerPlanId}`, {
+                            method: 'DELETE',
+                            credentials: 'same-origin'
+                        }).catch(() => { });
                     } else {
                         await fetch('/api/user/workout-progress', {
                             method: 'POST',
                             credentials: 'same-origin',
                             headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ 
-                                plan_id: currentTimerPlanId, 
-                                seconds_remaining: timerSecondsLeft 
+                            body: JSON.stringify({
+                                plan_id: currentTimerPlanId,
+                                seconds_remaining: timerSecondsLeft
                             })
-                        }).catch(() => {});
+                        }).catch(() => { });
                     }
                 } else {
                     const error = await res.json();
@@ -295,10 +295,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 showToast('Network error while saving workout history', 'error');
             }
         }
-        
+
         await loadWorkouts();
-        
-        const fmtSec = (s) => { const m = Math.floor(s/60), sec = s%60; return m > 0 ? `${m}m ${sec}s` : `${sec}s`; };
+
+        const fmtSec = (s) => { const m = Math.floor(s / 60), sec = s % 60; return m > 0 ? `${m}m ${sec}s` : `${sec}s`; };
         const statusMsg = isComplete
             ? `🎉 Workout complete! ${fmtSec(elapsedSeconds)} logged to history.`
             : `⏸️ Workout stopped. ${fmtSec(elapsedSeconds)} logged to history as incomplete.`;
@@ -321,7 +321,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     resumeFrom = data.seconds_remaining;
                 }
             }
-        } catch (e) {}
+        } catch (e) { }
 
         timerSecondsLeft = resumeFrom;
         const isResuming = resumeFrom < timerTotalSeconds;
@@ -405,7 +405,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (measurements.length === 0) {
                     tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:2rem;color:#94a3b8;">No measurements logged yet. Click "+ Log New Entry" to start tracking!</td></tr>';
                 } else {
-                    tbody.innerHTML = measurements.map(m => `<tr style="border-bottom:1px solid #e2e8f0;transition:background 0.2s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background=''">
+                    tbody.innerHTML = measurements.map(m => `<tr style="border-bottom:1px solid rgba(255, 255, 255, 0.08);transition:background 0.2s;" onmouseover="this.style.background='rgba(255, 255, 255, 0.08)'" onmouseout="this.style.background=''">
                         <td style="padding:1rem;font-weight:500;">${new Date(m.logged_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</td>
                         <td style="padding:1rem;font-weight:600;color:#1e293b;">${m.weight} kg</td>
                         <td style="padding:1rem;">${m.body_fat ? m.body_fat + '%' : '—'}</td>
@@ -442,7 +442,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const waist = document.getElementById('m_waist').value || null;
         const hips = document.getElementById('m_hips').value || null;
         const logged_date = new Date().toISOString().split('T')[0];
-        
+
         try {
             const res = await fetch('/api/user/measurements', {
                 method: 'POST',
@@ -493,9 +493,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const dayIcons = { Monday: '📅', Tuesday: '📅', Wednesday: '📅', Thursday: '📅', Friday: '📅', Saturday: '🌟', Sunday: '🌟' };
     const mealIcons = { breakfast: '🍳', lunch: '🥗', dinner: '🍽️' };
     const nutriBadge = (cal, protein, carb) => `<div style="display:flex;gap:8px;margin-top:5px;flex-wrap:wrap">
-        <span style="font-size:0.72rem;font-weight:600;background:#fef2f2;color:#dc2626;padding:2px 8px;border-radius:20px">🔥 ${cal} kcal</span>
-        <span style="font-size:0.72rem;font-weight:600;background:#eff6ff;color:#2563eb;padding:2px 8px;border-radius:20px">💪 ${protein}g</span>
-        <span style="font-size:0.72rem;font-weight:600;background:#fefce8;color:#a16207;padding:2px 8px;border-radius:20px">🌾 ${carb}g</span>
+        <span style="font-size:0.72rem;font-weight:600;background: rgba(220, 38, 38, 0.15);color:#dc2626;padding:2px 8px;border-radius:20px">🔥 ${cal} kcal</span>
+        <span style="font-size:0.72rem;font-weight:600;background: rgba(20, 20, 35, 0.5);color:#2563eb;padding:2px 8px;border-radius:20px">💪 ${protein}g</span>
+        <span style="font-size:0.72rem;font-weight:600;background: rgba(20, 20, 35, 0.5);color:#a16207;padding:2px 8px;border-radius:20px">🌾 ${carb}g</span>
     </div>`;
 
     const renderMealGrid = (type) => {
@@ -514,17 +514,17 @@ document.addEventListener('DOMContentLoaded', function () {
             const totalP = d.breakfast.protein + d.lunch.protein + d.dinner.protein;
             const totalC = d.breakfast.carb + d.lunch.carb + d.dinner.carb;
             return `
-            <div class="section-card day-card" data-day="${day}" style="cursor:pointer;border: ${isToday ? `2px solid ${accentColor}` : '1px solid #e2e8f0'}; ${isToday ? `box-shadow: 0 4px 15px ${accentBg};` : ''};transition:all 0.3s;" onmouseover="this.style.transform='translateY(-5px)';this.style.boxShadow='0 8px 20px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='';this.style.boxShadow='${isToday ? `0 4px 15px ${accentBg}` : ''}'">
+            <div class="section-card day-card" data-day="${day}" style="cursor:pointer;border: ${isToday ? `2px solid ${accentColor}` : '1px solid rgba(255, 255, 255, 0.08)'}; ${isToday ? `box-shadow: 0 4px 15px ${accentBg};` : ''};transition:all 0.3s;" onmouseover="this.style.transform='translateY(-5px)';this.style.boxShadow='0 8px 20px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='';this.style.boxShadow='${isToday ? `0 4px 15px ${accentBg}` : ''}'">
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.4rem">
                     <h3 style="font-size:1.1rem;font-weight:700;color:var(--text-dark)">${dayIcons[day] || '📅'} ${day}</h3>
                     ${isToday ? `<span style="background:${accentColor};color:white;font-size:0.72rem;font-weight:700;padding:3px 10px;border-radius:20px">TODAY</span>` : ''}
                 </div>
                 <div style="display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap">
-                    <span style="font-size:0.73rem;font-weight:700;color:#64748b;background:#f1f5f9;padding:3px 10px;border-radius:20px">🔥 ${totalCal} kcal</span>
-                    <span style="font-size:0.73rem;font-weight:700;color:#64748b;background:#f1f5f9;padding:3px 10px;border-radius:20px">💪 ${totalP}g protein</span>
-                    <span style="font-size:0.73rem;font-weight:700;color:#64748b;background:#f1f5f9;padding:3px 10px;border-radius:20px">🌾 ${totalC}g carbs</span>
+                    <span style="font-size:0.73rem;font-weight:700;color:#64748b;background: rgba(255, 255, 255, 0.05);padding:3px 10px;border-radius:20px">🔥 ${totalCal} kcal</span>
+                    <span style="font-size:0.73rem;font-weight:700;color:#64748b;background: rgba(255, 255, 255, 0.05);padding:3px 10px;border-radius:20px">💪 ${totalP}g protein</span>
+                    <span style="font-size:0.73rem;font-weight:700;color:#64748b;background: rgba(255, 255, 255, 0.05);padding:3px 10px;border-radius:20px">🌾 ${totalC}g carbs</span>
                 </div>
-                <div style="text-align:center;padding:0.5rem;background:#f8fafc;border-radius:8px;">
+                <div style="text-align:center;padding:0.5rem;background: rgba(255, 255, 255, 0.05);border-radius:8px;">
                     <span style="font-size:0.85rem;color:var(--primary-color);font-weight:600;">👉 Click to view meals</span>
                 </div>
             </div>`;
@@ -532,7 +532,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Add click handlers to day cards
         document.querySelectorAll('.day-card').forEach(card => {
-            card.addEventListener('click', function() {
+            card.addEventListener('click', function () {
                 const day = this.dataset.day;
                 showDayMeals(day, type);
             });
@@ -552,19 +552,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
         grid.innerHTML = `
             <div class="section-card" style="grid-column:1/-1;">
-                <button onclick="renderMealGrid('${type}')" style="padding:8px 16px;background:#f1f5f9;border:none;border-radius:8px;cursor:pointer;font-weight:600;color:var(--text-dark);margin-bottom:1rem;transition:all 0.2s;" onmouseover="this.style.background='#e2e8f0'" onmouseout="this.style.background='#f1f5f9'">← Back to Week View</button>
+                <button onclick="renderMealGrid('${type}')" style="padding:8px 16px;background: rgba(255, 255, 255, 0.05);border:none;border-radius:8px;cursor:pointer;font-weight:600;color:var(--text-dark);margin-bottom:1rem;transition:all 0.2s;" onmouseover="this.style.background='rgba(255, 255, 255, 0.08)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.08)'">← Back to Week View</button>
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:1rem;">
                     <div>
                         <h2 style="font-size:1.5rem;font-weight:800;color:var(--text-dark);margin-bottom:0.5rem;">${dayIcons[day] || '📅'} ${day}'s Meal Plan</h2>
                         <div style="display:flex;gap:8px;flex-wrap:wrap">
-                            <span style="font-size:0.85rem;font-weight:700;color:#64748b;background:#f1f5f9;padding:5px 12px;border-radius:20px">🔥 ${totalCal} kcal</span>
-                            <span style="font-size:0.85rem;font-weight:700;color:#64748b;background:#f1f5f9;padding:5px 12px;border-radius:20px">💪 ${totalP}g protein</span>
-                            <span style="font-size:0.85rem;font-weight:700;color:#64748b;background:#f1f5f9;padding:5px 12px;border-radius:20px">🌾 ${totalC}g carbs</span>
+                            <span style="font-size:0.85rem;font-weight:700;color:#64748b;background: rgba(255, 255, 255, 0.05);padding:5px 12px;border-radius:20px">🔥 ${totalCal} kcal</span>
+                            <span style="font-size:0.85rem;font-weight:700;color:#64748b;background: rgba(255, 255, 255, 0.05);padding:5px 12px;border-radius:20px">💪 ${totalP}g protein</span>
+                            <span style="font-size:0.85rem;font-weight:700;color:#64748b;background: rgba(255, 255, 255, 0.05);padding:5px 12px;border-radius:20px">🌾 ${totalC}g carbs</span>
                         </div>
                     </div>
                 </div>
                 <div style="display:grid;gap:1.5rem;margin-top:1.5rem;">
-                    <div style="padding:1.5rem;border-radius:12px;background:#fefce8;border:2px solid #fef08a;">
+                    <div style="padding:1.5rem;border-radius:12px;background: rgba(20, 20, 35, 0.5);border:2px solid #fef08a;">
                         <div style="display:flex;align-items:center;gap:12px;margin-bottom:1rem;">
                             <span style="font-size:2rem">${mealIcons.breakfast}</span>
                             <div>
@@ -574,7 +574,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         </div>
                         ${nutriBadge(d.breakfast.cal, d.breakfast.protein, d.breakfast.carb)}
                     </div>
-                    <div style="padding:1.5rem;border-radius:12px;background:#f0fdf4;border:2px solid #bbf7d0;">
+                    <div style="padding:1.5rem;border-radius:12px;background: rgba(20, 20, 35, 0.5);border:2px solid #bbf7d0;">
                         <div style="display:flex;align-items:center;gap:12px;margin-bottom:1rem;">
                             <span style="font-size:2rem">${mealIcons.lunch}</span>
                             <div>
@@ -584,7 +584,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         </div>
                         ${nutriBadge(d.lunch.cal, d.lunch.protein, d.lunch.carb)}
                     </div>
-                    <div style="padding:1.5rem;border-radius:12px;background:#eff6ff;border:2px solid #bfdbfe;">
+                    <div style="padding:1.5rem;border-radius:12px;background: rgba(20, 20, 35, 0.5);border:2px solid #bfdbfe;">
                         <div style="display:flex;align-items:center;gap:12px;margin-bottom:1rem;">
                             <span style="font-size:2rem">${mealIcons.dinner}</span>
                             <div>
@@ -622,7 +622,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Exposed to global scope for onclick handlers
     window.renderMealGrid = renderMealGrid;
-    
+
     window.switchDietType = (type) => {
         currentDietType = type;
         updateToggleUI(type);
@@ -669,46 +669,46 @@ document.addEventListener('DOMContentLoaded', function () {
         const todayName = new Date().toLocaleDateString('en-US', { weekday: 'long' });
         const todayMeals = mealData[currentDietType][todayName];
         const container = document.getElementById('daily-diet-summary');
-        
+
         if (!container || !todayMeals) return;
-        
+
         const mealIcons = { breakfast: '🍳', lunch: '🥗', dinner: '🍽️' };
         const accentColor = currentDietType === 'veg' ? '#16a34a' : '#dc2626';
-        
+
         container.innerHTML = `
-            <div style="padding: 1rem; background: #fefce8; border-radius: 10px; border-left: 4px solid #fbbf24;">
+            <div style="padding: 1rem; background: rgba(20, 20, 35, 0.5); border-radius: 10px; border-left: 4px solid #fbbf24;">
                 <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
                     <span style="font-size: 1.3rem;">${mealIcons.breakfast}</span>
                     <strong style="font-size: 0.85rem; color: #92400e; text-transform: uppercase;">Breakfast</strong>
                 </div>
                 <p style="margin: 0; font-size: 0.9rem; color: #1e293b; font-weight: 500;">${todayMeals.breakfast.name}</p>
                 <div style="display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap;">
-                    <span style="font-size: 0.7rem; font-weight: 600; background: #fef2f2; color: #dc2626; padding: 2px 6px; border-radius: 12px;">🔥 ${todayMeals.breakfast.cal} kcal</span>
-                    <span style="font-size: 0.7rem; font-weight: 600; background: #eff6ff; color: #2563eb; padding: 2px 6px; border-radius: 12px;">💪 ${todayMeals.breakfast.protein}g</span>
+                    <span style="font-size: 0.7rem; font-weight: 600; background: rgba(220, 38, 38, 0.15); color: #dc2626; padding: 2px 6px; border-radius: 12px;">🔥 ${todayMeals.breakfast.cal} kcal</span>
+                    <span style="font-size: 0.7rem; font-weight: 600; background: rgba(20, 20, 35, 0.5); color: #2563eb; padding: 2px 6px; border-radius: 12px;">💪 ${todayMeals.breakfast.protein}g</span>
                 </div>
             </div>
             
-            <div style="padding: 1rem; background: #f0fdf4; border-radius: 10px; border-left: 4px solid #22c55e;">
+            <div style="padding: 1rem; background: rgba(20, 20, 35, 0.5); border-radius: 10px; border-left: 4px solid #22c55e;">
                 <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
                     <span style="font-size: 1.3rem;">${mealIcons.lunch}</span>
                     <strong style="font-size: 0.85rem; color: #166534; text-transform: uppercase;">Lunch</strong>
                 </div>
                 <p style="margin: 0; font-size: 0.9rem; color: #1e293b; font-weight: 500;">${todayMeals.lunch.name}</p>
                 <div style="display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap;">
-                    <span style="font-size: 0.7rem; font-weight: 600; background: #fef2f2; color: #dc2626; padding: 2px 6px; border-radius: 12px;">🔥 ${todayMeals.lunch.cal} kcal</span>
-                    <span style="font-size: 0.7rem; font-weight: 600; background: #eff6ff; color: #2563eb; padding: 2px 6px; border-radius: 12px;">💪 ${todayMeals.lunch.protein}g</span>
+                    <span style="font-size: 0.7rem; font-weight: 600; background: rgba(220, 38, 38, 0.15); color: #dc2626; padding: 2px 6px; border-radius: 12px;">🔥 ${todayMeals.lunch.cal} kcal</span>
+                    <span style="font-size: 0.7rem; font-weight: 600; background: rgba(20, 20, 35, 0.5); color: #2563eb; padding: 2px 6px; border-radius: 12px;">💪 ${todayMeals.lunch.protein}g</span>
                 </div>
             </div>
             
-            <div style="padding: 1rem; background: #eff6ff; border-radius: 10px; border-left: 4px solid #3b82f6;">
+            <div style="padding: 1rem; background: rgba(20, 20, 35, 0.5); border-radius: 10px; border-left: 4px solid #3b82f6;">
                 <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
                     <span style="font-size: 1.3rem;">${mealIcons.dinner}</span>
                     <strong style="font-size: 0.85rem; color: #1e40af; text-transform: uppercase;">Dinner</strong>
                 </div>
                 <p style="margin: 0; font-size: 0.9rem; color: #1e293b; font-weight: 500;">${todayMeals.dinner.name}</p>
                 <div style="display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap;">
-                    <span style="font-size: 0.7rem; font-weight: 600; background: #fef2f2; color: #dc2626; padding: 2px 6px; border-radius: 12px;">🔥 ${todayMeals.dinner.cal} kcal</span>
-                    <span style="font-size: 0.7rem; font-weight: 600; background: #eff6ff; color: #2563eb; padding: 2px 6px; border-radius: 12px;">💪 ${todayMeals.dinner.protein}g</span>
+                    <span style="font-size: 0.7rem; font-weight: 600; background: rgba(220, 38, 38, 0.15); color: #dc2626; padding: 2px 6px; border-radius: 12px;">🔥 ${todayMeals.dinner.cal} kcal</span>
+                    <span style="font-size: 0.7rem; font-weight: 600; background: rgba(20, 20, 35, 0.5); color: #2563eb; padding: 2px 6px; border-radius: 12px;">💪 ${todayMeals.dinner.protein}g</span>
                 </div>
             </div>
             
@@ -779,7 +779,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 </div>
                 <h3 style="font-size:1.1rem;margin-bottom:0.4rem">${p.name}</h3>
                 <p style="color:#64748b;font-size:0.88rem;margin-bottom:1rem">${p.description || 'Custom workout'}</p>
-                <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid #e2e8f0;padding-top:1rem">
+                <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255, 255, 255, 0.08);padding-top:1rem">
                     <span style="font-size:0.85rem;color:#1e293b"><strong>${p.duration_minutes}</strong> min • ${p.estimated_calories} kcal</span>
                     <button class="workout-action" data-plan-id="${p.id}">Start</button>
                 </div>
@@ -832,14 +832,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // duration: prefer duration_seconds, fall back to duration_minutes * 60
             const secs = h.duration_seconds != null ? Number(h.duration_seconds)
-                       : h.duration_minutes  != null ? Number(h.duration_minutes) * 60 : 0;
+                : h.duration_minutes != null ? Number(h.duration_minutes) * 60 : 0;
 
             const isCompleted = h.completed === true || h.completed === 1 || h.completed === '1';
             const statusColor = isCompleted ? '#10b981' : '#f59e0b';
-            const statusBg    = isCompleted ? 'rgba(16,185,129,0.1)' : 'rgba(245,158,11,0.1)';
-            const statusText  = isCompleted ? '✅ Completed' : '⚠️ Incomplete';
+            const statusBg = isCompleted ? 'rgba(16,185,129,0.1)' : 'rgba(245,158,11,0.1)';
+            const statusText = isCompleted ? '✅ Completed' : '⚠️ Incomplete';
 
-            return `<tr style="border-bottom:1px solid #e2e8f0;transition:background 0.2s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background=''">
+            return `<tr style="border-bottom:1px solid rgba(255, 255, 255, 0.08);transition:background 0.2s;" onmouseover="this.style.background='rgba(255, 255, 255, 0.08)'" onmouseout="this.style.background=''">
                 <td style="padding:0.9rem 1rem;">
                     <div style="display:flex;align-items:center;gap:0.75rem;">
                         <span style="font-size:1.4rem;">${icon}</span>
@@ -855,7 +855,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 </td>
             </tr>`;
         }).join('');
-        
+
         console.log(`✅ Rendered ${history.length} workout history entries`);
     };
 
@@ -935,7 +935,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (e.target.classList.contains('btn-delete-history')) {
             const id = e.target.dataset.id;
             if (!confirm('Remove this entry from workout history?')) return;
-            
+
             fetch(`/api/user/workout-history/${id}`, {
                 method: 'DELETE', credentials: 'same-origin'
             }).then(res => {
@@ -1040,7 +1040,7 @@ document.addEventListener('DOMContentLoaded', function () {
             difficulty: document.getElementById('cw_difficulty').value,
             description: document.getElementById('cw_description').value || `Custom ${document.getElementById('cw_name').value} workout.`
         };
-        
+
         try {
             const res = await fetch('/api/user/workout-plans', {
                 method: 'POST',
@@ -1112,13 +1112,13 @@ document.addEventListener('DOMContentLoaded', function () {
     // ===== Subscription =====
     const loadSubscription = async () => {
         try {
-            const res  = await fetch('/api/user/subscription', { credentials: 'same-origin' });
+            const res = await fetch('/api/user/subscription', { credentials: 'same-origin' });
             const data = await res.json();
             if (!res.ok) return;
 
-            const active  = data.active;
+            const active = data.active;
             const pending = data.history.find(s => s.status === 'Pending');
-            const locked  = active || pending;
+            const locked = active || pending;
 
             // Apply or remove gate based on active plan only
             if (active) {
@@ -1129,16 +1129,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Update banner
             if (active) {
-                document.getElementById('current-plan-name').textContent   = active.plan_name;
-                document.getElementById('current-plan-price').textContent  = '\u20B9' + active.amount;
+                document.getElementById('current-plan-name').textContent = active.plan_name;
+                document.getElementById('current-plan-price').textContent = '\u20B9' + active.amount;
                 document.getElementById('current-plan-expiry').textContent = 'Active until ' + active.expiry_date;
                 document.getElementById('current-plan-banner').style.background =
-                    active.plan_name === 'Premium'  ? 'linear-gradient(135deg,#f59e0b,#d97706)' :
-                    active.plan_name === 'Standard' ? 'linear-gradient(135deg,#667eea,#764ba2)' :
-                    'linear-gradient(135deg,#10b981,#059669)';
+                    active.plan_name === 'Premium' ? 'linear-gradient(135deg,#f59e0b,#d97706)' :
+                        active.plan_name === 'Standard' ? 'linear-gradient(135deg,#667eea,#764ba2)' :
+                            'linear-gradient(135deg,#10b981,#059669)';
             } else if (pending) {
-                document.getElementById('current-plan-name').textContent   = pending.plan_name + ' (Pending)';
-                document.getElementById('current-plan-price').textContent  = '\u20B9' + pending.amount;
+                document.getElementById('current-plan-name').textContent = pending.plan_name + ' (Pending)';
+                document.getElementById('current-plan-price').textContent = '\u20B9' + pending.amount;
                 document.getElementById('current-plan-expiry').textContent = 'Awaiting admin approval';
                 document.getElementById('current-plan-banner').style.background = 'linear-gradient(135deg,#f59e0b,#d97706)';
             }
@@ -1171,8 +1171,8 @@ document.addEventListener('DOMContentLoaded', function () {
             if (data.history.length) {
                 tbody.innerHTML = data.history.map(s => {
                     const color = s.status === 'Active' ? '#10b981' : s.status === 'Pending' ? '#f59e0b' : '#64748b';
-                    const bg    = s.status === 'Active' ? 'rgba(16,185,129,0.1)' : s.status === 'Pending' ? 'rgba(245,158,11,0.1)' : 'rgba(100,116,139,0.1)';
-                    return '<tr style="border-bottom:1px solid #e2e8f0;">'
+                    const bg = s.status === 'Active' ? 'rgba(16,185,129,0.1)' : s.status === 'Pending' ? 'rgba(245,158,11,0.1)' : 'rgba(100,116,139,0.1)';
+                    return '<tr style="border-bottom:1px solid rgba(255, 255, 255, 0.08);">'
                         + '<td style="padding:1rem;font-weight:600;">' + s.plan_name + '</td>'
                         + '<td style="padding:1rem;">&#8377;' + s.amount + '/yr</td>'
                         + '<td style="padding:1rem;">' + s.start_date + '</td>'
@@ -1187,12 +1187,12 @@ document.addEventListener('DOMContentLoaded', function () {
     document.body.addEventListener('click', async function (e) {
         const btn = e.target.closest('.sub-plan-btn');
         if (!btn || btn.disabled) return;
-        const plan  = btn.dataset.plan;
+        const plan = btn.dataset.plan;
         const price = btn.dataset.price;
         if (!plan) return;
         if (!confirm(`Subscribe to the ${plan} plan for \u20B9${price}/year?`)) return;
         try {
-            const res  = await fetch('/api/user/subscription', {
+            const res = await fetch('/api/user/subscription', {
                 method: 'POST',
                 credentials: 'same-origin',
                 headers: { 'Content-Type': 'application/json' },
@@ -1211,7 +1211,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // ===== Profile: Load from DB =====
     const loadProfile = async () => {
         try {
-            const res  = await fetch('/api/user/profile', { credentials: 'same-origin' });
+            const res = await fetch('/api/user/profile', { credentials: 'same-origin' });
             const data = await parseJsonResponse(res);
             if (!res.ok || data.error) {
                 showToast(data.error || 'Unable to load profile.', 'error');
@@ -1226,24 +1226,24 @@ document.addEventListener('DOMContentLoaded', function () {
             if (nameEl) nameEl.textContent = fullName || 'User';
             const avatarEl = document.querySelector('.avatar');
             if (avatarEl) avatarEl.textContent = (data.first_name || 'U').charAt(0).toUpperCase();
-            
+
             // Mobile navbar avatar
             const mobileAvatarEl = document.querySelector('.mobile-avatar');
             if (mobileAvatarEl) mobileAvatarEl.textContent = (data.first_name || 'U').charAt(0).toUpperCase();
 
             // Personal Info form
             const set = (id, val) => { const el = document.getElementById(id); if (el) el.value = val || ''; };
-            set('p_fname',    data.first_name);
-            set('p_lname',    data.last_name);
-            set('p_email',    data.email);
-            set('p_phone',    data.phone);
-            set('p_age',      data.age);
-            set('p_gender',   data.gender);
+            set('p_fname', data.first_name);
+            set('p_lname', data.last_name);
+            set('p_email', data.email);
+            set('p_phone', data.phone);
+            set('p_age', data.age);
+            set('p_gender', data.gender);
 
             // Physical Stats form
-            set('p_height',         data.height);
-            set('p_weight',         data.weight);
-            set('p_fitness_goal',   data.fitness_goal);
+            set('p_height', data.height);
+            set('p_weight', data.weight);
+            set('p_fitness_goal', data.fitness_goal);
             set('p_activity_level', data.activity_level);
         } catch (e) { console.warn('Profile load error', e); }
     };
@@ -1252,18 +1252,18 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelector('.profile-save-btn')?.addEventListener('click', async () => {
         const get = (id) => { const el = document.getElementById(id); return el ? el.value.trim() : ''; };
         const payload = {
-            first_name:     get('p_fname'),
-            last_name:      get('p_lname'),
-            phone:          get('p_phone'),
-            age:            get('p_age')            || null,
-            gender:         get('p_gender'),
-            height:         get('p_height')         || null,
-            weight:         get('p_weight')         || null,
-            fitness_goal:   get('p_fitness_goal'),
+            first_name: get('p_fname'),
+            last_name: get('p_lname'),
+            phone: get('p_phone'),
+            age: get('p_age') || null,
+            gender: get('p_gender'),
+            height: get('p_height') || null,
+            weight: get('p_weight') || null,
+            fitness_goal: get('p_fitness_goal'),
             activity_level: get('p_activity_level'),
         };
         try {
-            const res  = await fetch('/api/user/profile', {
+            const res = await fetch('/api/user/profile', {
                 method: 'POST',
                 credentials: 'same-origin',
                 headers: { 'Content-Type': 'application/json' },

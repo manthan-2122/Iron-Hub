@@ -21,7 +21,7 @@
 }
 
 body {
-    background: #f8fafc;
+    background: rgba(255, 255, 255, 0.05) !important;
     min-height: 100vh;
     display: flex;
     overflow-x: hidden;
@@ -40,7 +40,7 @@ body {
 /* Sidebar */
 .sidebar {
     width: var(--sidebar-width);
-    background: white;
+    background: rgba(20, 20, 35, 0.6) !important;
     height: 100vh;
     position: fixed;
     left: 0;
@@ -48,7 +48,7 @@ body {
     padding: 2rem;
     display: flex;
     flex-direction: column;
-    border-right: 1px solid #e2e8f0;
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
     z-index: 100;
 }
 
@@ -157,7 +157,7 @@ body {
     display: flex;
     align-items: center;
     gap: 12px;
-    background: white;
+    background: rgba(20, 20, 35, 0.6) !important;
     padding: 8px 16px;
     border-radius: 50px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
@@ -199,7 +199,7 @@ body {
 }
 
 .stat-card {
-    background: white;
+    background: rgba(20, 20, 35, 0.6) !important;
     padding: 1.5rem;
     border-radius: 20px;
     display: flex;
@@ -243,7 +243,7 @@ body {
 
 /* Specific Section Styles */
 .section-card {
-    background: white;
+    background: rgba(20, 20, 35, 0.6) !important;
     border-radius: 20px;
     padding: 1.5rem;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
@@ -274,7 +274,7 @@ body {
     display: flex;
     align-items: center;
     padding: 1rem;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     transition: background 0.3s;
 }
 
@@ -283,13 +283,13 @@ body {
 }
 
 .client-item:hover {
-    background: #f8fafc;
+    background: rgba(255, 255, 255, 0.05) !important;
 }
 
 .client-avatar {
     width: 40px;
     height: 40px;
-    background: #e2e8f0;
+    background: rgba(255, 255, 255, 0.08);
     border-radius: 50%;
     margin-right: 1rem;
     display: flex;
@@ -337,13 +337,13 @@ body {
     gap: 1rem;
     margin-bottom: 1rem;
     padding-bottom: 1rem;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .schedule-time {
     text-align: center;
     min-width: 60px;
-    background: #f1f5f9;
+    background: rgba(255, 255, 255, 0.05) !important;
     padding: 8px;
     border-radius: 8px;
 }
@@ -392,7 +392,7 @@ body {
 }
 
 .toast {
-    background: white;
+    background: rgba(20, 20, 35, 0.6) !important;
     color: var(--text-dark);
     padding: 16px 24px;
     border-radius: 12px;
@@ -439,7 +439,7 @@ body {
 }
 
 .modal-content {
-    background: white;
+    background: rgba(20, 20, 35, 0.6) !important;
     width: 90%;
     max-width: 500px;
     border-radius: 20px;
@@ -490,7 +490,7 @@ body {
 .modal-form textarea {
     width: 100%;
     padding: 12px;
-    border: 1px solid #e2e8f0;
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 8px;
     font-family: inherit;
     transition: border-color 0.2s, box-shadow 0.2s;
@@ -524,7 +524,7 @@ body {
 .tab-btn {
     padding: 8px 16px;
     border: none;
-    background: #f1f5f9;
+    background: rgba(255, 255, 255, 0.05) !important;
     color: var(--text-light);
     border-radius: 20px;
     font-weight: 600;
@@ -535,7 +535,7 @@ body {
 }
 
 .tab-btn:hover {
-    background: #e2e8f0;
+    background: rgba(255, 255, 255, 0.08);
     color: var(--text-dark);
 }
 
@@ -581,11 +581,11 @@ body {
 
 /* Workout Plan Cards */
 .workout-card {
-    background: white;
+    background: rgba(20, 20, 35, 0.6) !important;
     border-radius: 16px;
     padding: 1.5rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    border: 1px solid #e2e8f0;
+    border: 1px solid rgba(255, 255, 255, 0.08);
     transition: all 0.3s;
     cursor: pointer;
 }
@@ -652,7 +652,7 @@ body {
     gap: 1.5rem;
     margin-bottom: 1rem;
     padding-top: 1rem;
-    border-top: 1px solid #f1f5f9;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .workout-stat {
@@ -695,7 +695,7 @@ body {
 }
 
 .workout-card-btn.secondary {
-    background: #f1f5f9;
+    background: rgba(255, 255, 255, 0.05) !important;
     color: var(--text-dark);
 }
 
@@ -755,8 +755,8 @@ body {
         left: 0;
         right: 0;
         height: 60px;
-        background: white;
-        border-bottom: 1px solid #e2e8f0;
+        background: rgba(20, 20, 35, 0.6) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         padding: 0 1rem;
         z-index: 1002;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -1098,7 +1098,7 @@ body {
         z-index: 1001;
         width: 44px;
         height: 44px;
-        background: white;
+        background: rgba(20, 20, 35, 0.6) !important;
         border: none;
         border-radius: 10px;
         cursor: pointer;
@@ -1123,7 +1123,7 @@ body {
     }
     
     .menu-toggle:hover span {
-        background: white;
+        background: rgba(20, 20, 35, 0.6) !important;
     }
     
     .user-profile {
@@ -1337,10 +1337,10 @@ body {
     tr {
         display: block;
         margin-bottom: 1rem;
-        background: #f8fafc;
+        background: rgba(255, 255, 255, 0.05) !important;
         border-radius: 8px;
         padding: 0.75rem;
-        border: 1px solid #e2e8f0;
+        border: 1px solid rgba(255, 255, 255, 0.08);
     }
     
     td {
@@ -1363,7 +1363,7 @@ body {
     td:last-child {
         margin-top: 0.5rem;
         padding-top: 0.5rem;
-        border-top: 1px solid #e2e8f0 !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
     }
     
     /* Workout Cards Mobile Optimization */
@@ -1514,11 +1514,11 @@ body {
     
     /* Workout Plan Cards */
     .workout-card {
-        background: white;
+        background: rgba(20, 20, 35, 0.6) !important;
         border-radius: 12px;
         padding: 0.875rem;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-        border: 1px solid #e2e8f0;
+        border: 1px solid rgba(255, 255, 255, 0.08);
         transition: all 0.3s;
         cursor: pointer;
         width: 100%;
@@ -1596,7 +1596,7 @@ body {
         gap: 1rem;
         margin-bottom: 0.75rem;
         padding-top: 0.75rem;
-        border-top: 1px solid #f1f5f9;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
         width: 100%;
         flex-wrap: wrap;
     }
@@ -1644,7 +1644,7 @@ body {
     }
     
     .workout-card-btn.secondary {
-        background: #f1f5f9;
+        background: rgba(255, 255, 255, 0.05) !important;
         color: var(--text-dark);
     }
     
@@ -1685,10 +1685,10 @@ body {
     #earnings tbody tr {
         display: block;
         margin-bottom: 1rem;
-        background: #f8fafc;
+        background: rgba(255, 255, 255, 0.05) !important;
         border-radius: 8px;
         padding: 0.75rem;
-        border: 1px solid #e2e8f0;
+        border: 1px solid rgba(255, 255, 255, 0.08);
     }
     
     #earnings td {
@@ -2052,7 +2052,7 @@ body {
         gap: 1.25rem;
         margin-bottom: 1rem;
         padding-top: 1rem;
-        border-top: 1px solid #f1f5f9;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
         width: 100%;
     }
     
@@ -2371,7 +2371,7 @@ body {
     right: 2px;
     width: 28px;
     height: 28px;
-    background: white;
+    background: rgba(20, 20, 35, 0.6) !important;
     border-radius: 50%;
     box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     cursor: pointer;
@@ -2393,7 +2393,7 @@ body {
     gap: 0;
     margin-top: 1.25rem;
     padding-top: 1.25rem;
-    border-top: 1px solid #f1f5f9;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .settings-stat {
@@ -2418,7 +2418,7 @@ body {
 .settings-stat-divider {
     width: 1px;
     height: 35px;
-    background: #e2e8f0;
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .settings-quicklink {
@@ -2433,7 +2433,7 @@ body {
 }
 
 .settings-quicklink:hover {
-    background: #f1f5f9;
+    background: rgba(255, 255, 255, 0.05) !important;
     color: var(--primary-color);
     padding-left: 18px;
 }
@@ -2482,7 +2482,7 @@ body {
 
 .settings-divider {
     height: 1px;
-    background: #f1f5f9;
+    background: rgba(255, 255, 255, 0.05) !important;
     margin: 1.25rem 0;
     border: none;
 }
@@ -2505,7 +2505,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 1rem 0.25rem;
-    border-bottom: 1px solid #f8fafc;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .toggle-item:last-child {
@@ -2556,7 +2556,7 @@ body {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: white;
+    background: rgba(20, 20, 35, 0.6) !important;
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     transition: transform 0.3s cubic-bezier(0.68,-0.55,0.265,1.55);
 }
@@ -2580,8 +2580,8 @@ body {
 .day-btn {
     padding: 7px 13px;
     border-radius: 10px;
-    border: 1.5px solid #e2e8f0;
-    background: white;
+    border: 1.5px solid rgba(255, 255, 255, 0.08);
+    background: rgba(20, 20, 35, 0.6) !important;
     color: var(--text-light);
     font-weight: 600;
     font-size: 0.82rem;
@@ -2604,7 +2604,7 @@ body {
 /* Password Strength */
 .password-strength-bar {
     height: 6px;
-    background: #e2e8f0;
+    background: rgba(255, 255, 255, 0.08);
     border-radius: 100px;
     margin-top: 0.75rem;
     overflow: hidden;
@@ -3111,3 +3111,125 @@ body {
         border-radius: 14px;
     }
 }
+
+
+/* --- AI Theme Global Override --- */
+:root {
+    --primary-color: #8b5cf6 !important;
+    --secondary-color: #3b82f6 !important;
+    --bg-color: #0b0a15 !important;
+    --card-bg: rgba(20, 20, 35, 0.5) !important;
+    --glass-border: rgba(255, 255, 255, 0.08) !important;
+    --text-primary: #ffffff !important;
+    --text-secondary: #94a3b8 !important;
+    --text-dark: #ffffff !important;
+    --text-light: #94a3b8 !important;
+    --glow-color: rgba(139, 92, 246, 0.4) !important;
+    --glass-bg: rgba(20, 20, 35, 0.7) !important;
+}
+body {
+    background: #0b0a15 !important;
+    color: #ffffff !important;
+    position: relative !important;
+}
+body::before, body::after {
+    content: '';
+    position: fixed;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    filter: blur(200px);
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.4;
+}
+body::before { top: -200px; left: -200px; background: #8b5cf6; }
+body::after { bottom: -200px; right: -200px; background: #3b82f6; }
+
+/* Enforce dark glassmorphism on ALL containers */
+.login-container, .register-container, .section-card, .stat-card, .sidebar, .header, .card, .profile-card, .quick-actions-grid .action-btn, .mobile-navbar, .table-container, .client-card, .workout-item, .class-item {
+    background: rgba(20, 20, 35, 0.5) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    backdrop-filter: blur(20px) !important;
+    color: #ffffff !important;
+}
+
+/* Fix text colors */
+h1, h2, h3, h4, h5, h6, .page-title, label, .workout-title, .user-name, .time, .brand-name {
+    color: #ffffff !important;
+}
+.text-muted, .text-light, .workout-meta, .stat-label, .date, .user-role {
+    color: #94a3b8 !important;
+}
+
+/* Force Table dark mode */
+table, thead, tbody, tr, th, td {
+    background-color: transparent !important;
+    background: transparent !important;
+    color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+thead, th, thead tr {
+    background: rgba(139, 92, 246, 0.1) !important;
+}
+tr {
+    background: rgba(20, 20, 35, 0.4) !important;
+}
+tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.02) !important;
+}
+
+/* Override any hardcoded white backgrounds that might be in row 1 or other places */
+[class*="bg-white"], .bg-white {
+    background-color: transparent !important;
+    background: transparent !important;
+}
+
+/* Fix form elements and dropdown options */
+.form-control, input, select, textarea {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+}
+select option {
+    background: #1a1a2e !important;
+    color: #ffffff !important;
+}
+.form-control:focus, input:focus {
+    border-color: #8b5cf6 !important;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2) !important;
+}
+
+/* Fix all pills, filters, secondary buttons that were white */
+/* We target common utility classes used for these pills */
+.filter-btn, .pill, .badge, .status-badge, .tab-btn, .btn:not(.btn-primary), button:not(.btn-primary) {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+.filter-btn.active, .pill.active, .tab-btn.active, .btn-primary {
+    background: linear-gradient(135deg, #8b5cf6, #3b82f6) !important;
+    color: #ffffff !important;
+    border: none !important;
+}
+
+/* Calendar specifically */
+.calendar-day, .calendar-item, .time-slot, .day-cell, .schedule-item {
+    background: rgba(20, 20, 35, 0.6) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    color: #ffffff !important;
+}
+
+/* Fix any remaining inline styles or specific IDs with white backgrounds */
+div[style*="background: rgba(20, 20, 35, 0.6) !important"], div[style*="background-color: rgba(20, 20, 35, 0.6) !important"], div[style*="background-color: rgba(20, 20, 35, 0.6) !important"], div[style*="background: rgba(20, 20, 35, 0.6) !important"] {
+    background: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* FINAL CATCH-ALL FOR REMAINING WHITE BACKGROUNDS */
+.list-group-item, li, ul, .modal, .modal-content, .modal-dialog, .popup, .dialog, .dropdown-menu, .dropdown-item, .client-list, .client-item, .checkbox-group, .select-group, [class*="bg-white"], [class*="bg-light"] {
+    background-color: rgba(20, 20, 35, 0.5) !important;
+    background: rgba(20, 20, 35, 0.5) !important;
+    color: #ffffff !important;
+}
+
+.dashboard-header { border: none !important; }

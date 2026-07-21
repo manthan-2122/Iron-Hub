@@ -307,7 +307,7 @@ function renderTrainerChatUsers() {
         const userItem = document.createElement('button');
         userItem.type = 'button';
         userItem.className = 'action-btn';
-        userItem.style.cssText = 'text-align:left; width:100%; padding: 0.85rem 1rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; color: var(--text-dark);';
+        userItem.style.cssText = 'text-align:left; width:100%; padding: 0.85rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; color: var(--text-dark);';
         userItem.innerHTML = `<strong>${user.full_name || user.email}</strong><br><span style="font-size:0.85rem;color:var(--text-light);">Last message: ${new Date(user.last_message_at).toLocaleString()}</span>`;
         userItem.addEventListener('click', () => selectTrainerChatUser(user.user_id, user.full_name || user.email));
         DOM.trainerChatUsers.appendChild(userItem);
@@ -386,7 +386,7 @@ function addTrainerChatMessage(msg) {
     if (!DOM.trainerChatMessages) return;
     const messageDiv = document.createElement('div');
     const senderClass = msg.sender_type === 'trainer' ? 'trainer' : (msg.sender_type === 'support' ? 'support' : 'user');
-    messageDiv.style.cssText = `padding: 0.85rem 1rem; border-radius: 16px; max-width: 90%; line-height: 1.4; ${senderClass === 'trainer' ? 'background:#eff6ff; align-self:flex-end;' : senderClass === 'user' ? 'background:white; align-self:flex-start;' : 'background:#e2e8f0; align-self:flex-start;'}`;
+    messageDiv.style.cssText = `padding: 0.85rem 1rem; border-radius: 16px; max-width: 90%; line-height: 1.4; ${senderClass === 'trainer' ? 'background: rgba(20, 20, 35, 0.5); align-self:flex-end;' : senderClass === 'user' ? 'background: rgba(20, 20, 35, 0.5); align-self:flex-start;' : 'background:rgba(255, 255, 255, 0.08); align-self:flex-start;'}`;
     const senderLabel = senderClass === 'trainer' ? 'Trainer' : senderClass === 'user' ? 'User' : 'Support';
     const timestamp = msg.created_at ? new Date(msg.created_at).toLocaleString() : new Date().toLocaleString();
     messageDiv.innerHTML = `<div style="font-size:0.85rem; color:var(--text-light); margin-bottom:0.35rem;">${senderLabel}</div><div style="font-size:0.95rem; color:var(--text-dark);">${escapeHtml(msg.message)}</div><div style="font-size:0.75rem; color:var(--text-light); margin-top:0.5rem; text-align:right;">${timestamp}</div>`;
@@ -407,7 +407,7 @@ function renderClientsTable() {
     state.clients.forEach(client => {
         const tr = document.createElement('tr');
         tr.className = 'client-row';
-        tr.style.cssText = 'border-bottom: 1px solid #e2e8f0; transition: background 0.3s ease;';
+        tr.style.cssText = 'border-bottom: 1px solid rgba(255, 255, 255, 0.08); transition: background 0.3s ease;';
         tr.setAttribute('data-status', client.status || 'Active');
         
         const planName = client.planDetails ? client.planDetails.name : 'No Plan';
@@ -502,7 +502,7 @@ function renderWorkouts() {
         card.className = 'stat-card workout-card-premium workout-card';
         card.setAttribute('data-category', plan.difficulty || 'Beginner');
         // Match the layout from the image: Top Badge, Title, Desc, Stats, Button
-        card.style.cssText = 'display: flex; flex-direction: column; align-items: flex-start; padding: 1.5rem; position: relative; background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); gap: 12px; height: 100%; border: 1px solid #f1f5f9;';
+        card.style.cssText = 'display: flex; flex-direction: column; align-items: flex-start; padding: 1.5rem; position: relative; background: rgba(20, 20, 35, 0.5); border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); gap: 12px; height: 100%; border: 1px solid rgba(255, 255, 255, 0.08);';
         
         let difficultyColor = '#10b981'; // Beginner (Green)
         let difficultyBg = '#ecfdf5';
@@ -541,7 +541,7 @@ function renderWorkouts() {
         
         // Add a subtle hover effect to the new edit button dynamically
         const editBtn = card.querySelector('button[onclick^="editWorkout"]');
-        editBtn.addEventListener('mouseenter', () => { editBtn.style.background = '#f8fafc'; editBtn.style.borderColor = 'var(--primary-color)'; });
+        editBtn.addEventListener('mouseenter', () => { editBtn.style.background = 'rgba(255, 255, 255, 0.08)'; editBtn.style.borderColor = 'var(--primary-color)'; });
         editBtn.addEventListener('mouseleave', () => { editBtn.style.background = 'transparent'; editBtn.style.borderColor = '#cbd5e1'; });
 
         // Add a hover effect to the delete button
@@ -602,7 +602,7 @@ function renderWeeklyCalendar() {
     // Simplified week view 
     for(let i=1; i<=7; i++) {
          const cell = document.createElement('div');
-         cell.style.cssText = 'background: white; border: 1px solid #e2e8f0; border-radius: 4px; min-height: 80px; padding: 5px; display:flex; flex-direction:column; gap:4px; align-items:center;';
+         cell.style.cssText = 'background: rgba(20, 20, 35, 0.5); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 4px; min-height: 80px; padding: 5px; display:flex; flex-direction:column; gap:4px; align-items:center;';
          
          // Find sessions for this day of week (1=Mon, 0=Sun in JS)
          let jsDay = i;

@@ -21,7 +21,7 @@
 }
 
 body {
-    background: #f1f5f9;
+    background: rgba(255, 255, 255, 0.05) !important;
     min-height: 100vh;
     display: flex;
     overflow-x: hidden;
@@ -34,7 +34,7 @@ body {
     left: 0;
     right: 0;
     height: var(--navbar-height);
-    background: white;
+    background: rgba(20, 20, 35, 0.6) !important;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     display: none;
     align-items: center;
@@ -245,7 +245,7 @@ body {
     display: flex;
     align-items: center;
     gap: 12px;
-    background: white;
+    background: rgba(20, 20, 35, 0.6) !important;
     padding: 8px 16px;
     border-radius: 50px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
@@ -287,7 +287,7 @@ body {
 }
 
 .stat-card {
-    background: white;
+    background: rgba(20, 20, 35, 0.6) !important;
     padding: 1.5rem;
     border-radius: 20px;
     display: flex;
@@ -340,7 +340,7 @@ body {
 
 /* Section Card */
 .section-card {
-    background: white;
+    background: rgba(20, 20, 35, 0.6) !important;
     border-radius: 20px;
     padding: 1.5rem;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
@@ -388,7 +388,7 @@ table {
 th {
     text-align: left;
     padding: 1rem;
-    background: #f8fafc;
+    background: rgba(255, 255, 255, 0.05) !important;
     color: var(--text-light);
     font-weight: 600;
     font-size: 0.9rem;
@@ -398,7 +398,7 @@ th {
 
 td {
     padding: 1rem;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     color: var(--text-dark);
     font-size: 0.95rem;
     vertical-align: middle;
@@ -414,7 +414,7 @@ tr:last-child td {
 }
 
 tr:hover {
-    background: #f8fafc;
+    background: rgba(255, 255, 255, 0.05) !important;
 }
 
 /* Client Database Table Specific Styles */
@@ -520,7 +520,7 @@ tr:hover {
 }
 
 .activity-feed::-webkit-scrollbar-track {
-    background: #f1f5f9;
+    background: rgba(255, 255, 255, 0.05) !important;
     border-radius: 3px;
 }
 
@@ -535,7 +535,7 @@ tr:hover {
     gap: 1rem;
     padding-bottom: 1rem;
     margin-bottom: 1rem;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .activity-item:last-child {
@@ -547,7 +547,7 @@ tr:hover {
 .activity-icon {
     width: 32px;
     height: 32px;
-    background: #f1f5f9;
+    background: rgba(255, 255, 255, 0.05) !important;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -609,7 +609,7 @@ tr:hover {
 }
 
 .modal-content {
-    background-color: #fff;
+    background-color: rgba(20, 20, 35, 0.6) !important;
     padding: 2.5rem;
     border-radius: 20px;
     width: 90%;
@@ -1062,7 +1062,7 @@ textarea:focus {
     }
 
     .table-container::-webkit-scrollbar-track {
-        background: #f1f5f9;
+        background: rgba(255, 255, 255, 0.05) !important;
         border-radius: 4px;
     }
 
@@ -1497,3 +1497,124 @@ textarea:focus {
         font-size: 0.75rem;
     }
 }
+
+/* --- AI Theme Global Override --- */
+:root {
+    --primary-color: #8b5cf6 !important;
+    --secondary-color: #3b82f6 !important;
+    --bg-color: #0b0a15 !important;
+    --card-bg: rgba(20, 20, 35, 0.5) !important;
+    --glass-border: rgba(255, 255, 255, 0.08) !important;
+    --text-primary: #ffffff !important;
+    --text-secondary: #94a3b8 !important;
+    --text-dark: #ffffff !important;
+    --text-light: #94a3b8 !important;
+    --glow-color: rgba(139, 92, 246, 0.4) !important;
+    --glass-bg: rgba(20, 20, 35, 0.7) !important;
+}
+body {
+    background: #0b0a15 !important;
+    color: #ffffff !important;
+    position: relative !important;
+}
+body::before, body::after {
+    content: '';
+    position: fixed;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    filter: blur(200px);
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.4;
+}
+body::before { top: -200px; left: -200px; background: #8b5cf6; }
+body::after { bottom: -200px; right: -200px; background: #3b82f6; }
+
+/* Enforce dark glassmorphism on ALL containers */
+.login-container, .register-container, .section-card, .stat-card, .sidebar, .header, .card, .profile-card, .quick-actions-grid .action-btn, .mobile-navbar, .table-container, .client-card, .workout-item, .class-item {
+    background: rgba(20, 20, 35, 0.5) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    backdrop-filter: blur(20px) !important;
+    color: #ffffff !important;
+}
+
+/* Fix text colors */
+h1, h2, h3, h4, h5, h6, .page-title, label, .workout-title, .user-name, .time, .brand-name {
+    color: #ffffff !important;
+}
+.text-muted, .text-light, .workout-meta, .stat-label, .date, .user-role {
+    color: #94a3b8 !important;
+}
+
+/* Force Table dark mode */
+table, thead, tbody, tr, th, td {
+    background-color: transparent !important;
+    background: transparent !important;
+    color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+thead, th, thead tr {
+    background: rgba(139, 92, 246, 0.1) !important;
+}
+tr {
+    background: rgba(20, 20, 35, 0.4) !important;
+}
+tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.02) !important;
+}
+
+/* Override any hardcoded white backgrounds that might be in row 1 or other places */
+[class*="bg-white"], .bg-white {
+    background-color: transparent !important;
+    background: transparent !important;
+}
+
+/* Fix form elements and dropdown options */
+.form-control, input, select, textarea {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+}
+select option {
+    background: #1a1a2e !important;
+    color: #ffffff !important;
+}
+.form-control:focus, input:focus {
+    border-color: #8b5cf6 !important;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2) !important;
+}
+
+/* Fix all pills, filters, secondary buttons that were white */
+/* We target common utility classes used for these pills */
+.filter-btn, .pill, .badge, .status-badge, .tab-btn, .btn:not(.btn-primary), button:not(.btn-primary) {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+.filter-btn.active, .pill.active, .tab-btn.active, .btn-primary {
+    background: linear-gradient(135deg, #8b5cf6, #3b82f6) !important;
+    color: #ffffff !important;
+    border: none !important;
+}
+
+/* Calendar specifically */
+.calendar-day, .calendar-item, .time-slot, .day-cell, .schedule-item {
+    background: rgba(20, 20, 35, 0.6) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    color: #ffffff !important;
+}
+
+/* Fix any remaining inline styles or specific IDs with white backgrounds */
+div[style*="background: rgba(20, 20, 35, 0.6) !important"], div[style*="background-color: rgba(20, 20, 35, 0.6) !important"], div[style*="background-color: rgba(20, 20, 35, 0.6) !important"], div[style*="background: rgba(20, 20, 35, 0.6) !important"] {
+    background: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* FINAL CATCH-ALL FOR REMAINING WHITE BACKGROUNDS */
+.list-group-item, li, ul, .modal, .modal-content, .modal-dialog, .popup, .dialog, .dropdown-menu, .dropdown-item, .client-list, .client-item, .checkbox-group, .select-group, [class*="bg-white"], [class*="bg-light"] {
+    background-color: rgba(20, 20, 35, 0.5) !important;
+    background: rgba(20, 20, 35, 0.5) !important;
+    color: #ffffff !important;
+}
+
+.dashboard-header { border: none !important; }

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trainer Dashboard - Iron Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/trainer_dashboard.css">
+    <link rel="stylesheet" href="/static/css/trainer_dashboard.css?v=8">
 </head>
 
 <body>
@@ -185,20 +185,20 @@
                     <span style="font-size: 0.85rem; color: var(--text-light);">View client messages and reply directly</span>
                 </div>
                 <div style="display: grid; grid-template-columns: 1.2fr 1.8fr; gap: 1.5rem; min-height: 520px;">
-                    <div style="background: #f8fafc; border-radius: 16px; padding: 1rem; display: flex; flex-direction: column; gap: 1rem;">
+                    <div style="background: rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 1rem; display: flex; flex-direction: column; gap: 1rem;">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <h3 style="margin: 0; font-size: 1rem;">Client Chat Inbox</h3>
                         </div>
                         <div id="trainer-chat-users" style="display: grid; gap: 0.75rem; overflow-y: auto; padding-right: 4px;"></div>
                     </div>
-                    <div style="display: flex; flex-direction: column; background: white; border-radius: 16px; padding: 1rem;">
+                    <div style="display: flex; flex-direction: column; background: rgba(20, 20, 35, 0.5); border-radius: 16px; padding: 1rem;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                             <div>
                                 <h3 style="margin: 0; font-size: 1rem;">Chat Window</h3>
                                 <p id="trainer-chat-selected" style="margin: 0; color: var(--text-light); font-size: 0.95rem;">Select a user to view messages.</p>
                             </div>
                         </div>
-                        <div id="trainer-chat-messages" style="flex: 1; min-height: 320px; max-height: 420px; overflow-y: auto; padding: 1rem; border: 1px solid #e2e8f0; border-radius: 16px; background: #f8fafc; display: flex; flex-direction: column; gap: 0.75rem;"></div>
+                        <div id="trainer-chat-messages" style="flex: 1; min-height: 320px; max-height: 420px; overflow-y: auto; padding: 1rem; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; background: rgba(255, 255, 255, 0.05); display: flex; flex-direction: column; gap: 0.75rem;"></div>
                         <div style="display: flex; gap: 0.75rem; margin-top: 1rem;">
                             <input id="trainer-chat-input" type="text" placeholder="Type your reply..." style="flex: 1; padding: 12px 14px; border: 1px solid #cbd5e1; border-radius: 12px; font-size: 0.95rem;">
                             <button id="trainer-chat-send-btn" class="action-btn" style="padding: 12px 20px; min-width: 120px;">Send Reply</button>
@@ -215,7 +215,7 @@
                     <h2 class="section-title">Client Management</h2>
                     <div style="display: flex; gap: 10px;">
                         <input type="text" placeholder="Search clients..."
-                            style="padding: 8px 12px; border: 1px solid #e2e8f0; border-radius: 8px;">
+                            style="padding: 8px 12px; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px;">
                         <button class="workout-action action-btn" data-modal="clientModal" style="padding: 8px 16px;" onclick="openModal('clientModal', true)">+ Add Client</button>
                     </div>
                 </div>
@@ -229,7 +229,7 @@
 
                 <div style="overflow-x: auto;">
                     <table style="width: 100%; border-collapse: collapse; text-align: left;" class="clients-table">
-                        <thead style="background: #f8fafc;">
+                        <thead style="background: rgba(255, 255, 255, 0.05);">
                             <tr>
                                 <th style="padding: 1rem; color: var(--text-light); font-weight: 600;">Client Name</th>
                                 <th style="padding: 1rem; color: var(--text-light); font-weight: 600;">Current Plan</th>
@@ -262,23 +262,23 @@
                         <button class="workout-action action-btn" data-modal="scheduleModal" onclick="openModal('scheduleModal', true)">+ New Appointment</button>
                     </div>
                     <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; text-align: center; margin-bottom: 10px;">
-                        <div style="font-weight: 600; padding: 10px; background: #f1f5f9; border-radius: 8px;">Mon</div>
-                        <div style="font-weight: 600; padding: 10px; background: #f1f5f9; border-radius: 8px;">Tue</div>
-                        <div style="font-weight: 600; padding: 10px; background: #f1f5f9; border-radius: 8px;">Wed</div>
-                        <div style="font-weight: 600; padding: 10px; background: #f1f5f9; border-radius: 8px;">Thu</div>
-                        <div style="font-weight: 600; padding: 10px; background: #f1f5f9; border-radius: 8px;">Fri</div>
-                        <div style="font-weight: 600; padding: 10px; background: #f1f5f9; border-radius: 8px;">Sat</div>
-                        <div style="font-weight: 600; padding: 10px; background: #f1f5f9; border-radius: 8px;">Sun</div>
+                        <div style="font-weight: 600; padding: 10px; background: rgba(255, 255, 255, 0.05); border-radius: 8px;">Mon</div>
+                        <div style="font-weight: 600; padding: 10px; background: rgba(255, 255, 255, 0.05); border-radius: 8px;">Tue</div>
+                        <div style="font-weight: 600; padding: 10px; background: rgba(255, 255, 255, 0.05); border-radius: 8px;">Wed</div>
+                        <div style="font-weight: 600; padding: 10px; background: rgba(255, 255, 255, 0.05); border-radius: 8px;">Thu</div>
+                        <div style="font-weight: 600; padding: 10px; background: rgba(255, 255, 255, 0.05); border-radius: 8px;">Fri</div>
+                        <div style="font-weight: 600; padding: 10px; background: rgba(255, 255, 255, 0.05); border-radius: 8px;">Sat</div>
+                        <div style="font-weight: 600; padding: 10px; background: rgba(255, 255, 255, 0.05); border-radius: 8px;">Sun</div>
                     </div>
                     <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; text-align: center;" id="weekly-calendar">
                         <!-- Populated by JS -->
-                        <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; min-height: 80px;"></div>
-                        <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; min-height: 80px;"></div>
-                        <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; min-height: 80px;"></div>
-                        <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; min-height: 80px;"></div>
-                        <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; min-height: 80px;"></div>
-                        <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; min-height: 80px;"></div>
-                        <div style="background: white; border: 1px solid #e2e8f0; border-radius: 4px; min-height: 80px;"></div>
+                        <div style="background: rgba(20, 20, 35, 0.5); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 4px; min-height: 80px;"></div>
+                        <div style="background: rgba(20, 20, 35, 0.5); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 4px; min-height: 80px;"></div>
+                        <div style="background: rgba(20, 20, 35, 0.5); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 4px; min-height: 80px;"></div>
+                        <div style="background: rgba(20, 20, 35, 0.5); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 4px; min-height: 80px;"></div>
+                        <div style="background: rgba(20, 20, 35, 0.5); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 4px; min-height: 80px;"></div>
+                        <div style="background: rgba(20, 20, 35, 0.5); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 4px; min-height: 80px;"></div>
+                        <div style="background: rgba(20, 20, 35, 0.5); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 4px; min-height: 80px;"></div>
                     </div>
                 </div>
 
@@ -342,7 +342,7 @@
                         </div>
                         <div class="form-group" style="margin-bottom: 1rem;">
                             <label>Email Address</label>
-                            <input type="email" id="s-email" placeholder="you@example.com" readonly style="background: #f1f5f9; cursor: not-allowed;">
+                            <input type="email" id="s-email" placeholder="you@example.com" readonly style="background: rgba(255, 255, 255, 0.05); cursor: not-allowed;">
                         </div>
                         <div class="form-group" style="margin-bottom: 1rem;">
                             <label>Phone Number</label>
@@ -447,7 +447,7 @@
                                 <label>New Password</label>
                                 <input type="password" id="s-new-pw" placeholder="Min 8 characters">
                                 <!-- Password strength bar -->
-                                <div id="pw-strength-bar" style="height:5px; background:#e2e8f0; border-radius:99px; margin-top:8px; display:none;">
+                                <div id="pw-strength-bar" style="height:5px; background:rgba(255, 255, 255, 0.08); border-radius:99px; margin-top:8px; display:none;">
                                     <div id="pw-bar-fill" style="height:100%; border-radius:99px; width:0%; background:var(--danger); transition: width 0.4s, background 0.4s;"></div>
                                 </div>
                             </div>
@@ -531,7 +531,7 @@
                         <h2 class="section-title" style="color: var(--danger);">⚠️ Danger Zone</h2>
                     </div>
                     <!-- Deactivate -->
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: #fffbeb; border: 1px solid #fcd34d; border-radius: 12px; margin-bottom: 1rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: rgba(20, 20, 35, 0.5);beb; border: 1px solid #fcd34d; border-radius: 12px; margin-bottom: 1rem;">
                         <div>
                             <div style="font-weight: 600; color: var(--text-dark); font-size: 0.95rem;">Deactivate Account</div>
                             <div style="font-size: 0.82rem; color: var(--text-light); margin-top: 3px;">Temporarily hide your profile from the platform</div>
@@ -539,7 +539,7 @@
                         <button class="action-btn" style="background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; flex-shrink: 0;" onclick="showToast('Account deactivation requires admin approval.', 'info')">Deactivate</button>
                     </div>
                     <!-- Delete -->
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: #fff5f5; border: 1px solid #fca5a5; border-radius: 12px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: rgba(20, 20, 35, 0.5);5f5; border: 1px solid #fca5a5; border-radius: 12px;">
                         <div>
                             <div style="font-weight: 600; color: var(--danger); font-size: 0.95rem;">Delete Account Permanently</div>
                             <div style="font-size: 0.82rem; color: var(--text-light); margin-top: 3px;">All data will be erased. This cannot be undone.</div>
@@ -566,7 +566,7 @@
             <h2 style="margin-bottom: 1rem; color: var(--text-dark);">Confirm Deletion</h2>
             <p style="color: var(--text-light); margin-bottom: 2rem;">Are you sure you want to delete this item? This action cannot be undone.</p>
             <div style="display: flex; gap: 10px; justify-content: center;">
-                <button class="action-btn" style="background: #e2e8f0; color: var(--text-dark);" onclick="closeModal('deleteModal')">Cancel</button>
+                <button class="action-btn" style="background: rgba(255, 255, 255, 0.08); color: var(--text-dark);" onclick="closeModal('deleteModal')">Cancel</button>
                 <button class="action-btn" id="confirmDeleteBtn" style="background: var(--danger);">Delete</button>
             </div>
         </div>
@@ -584,28 +584,28 @@
                     <input type="hidden" id="client-id">
                     <div class="form-group" style="margin-bottom: 1rem;">
                         <label>Client Name (Username)</label>
-                        <input type="text" id="client-name" required placeholder="e.g. JaneDoe123" style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 1rem;">
+                        <input type="text" id="client-name" required placeholder="e.g. JaneDoe123" style="width: 100%; padding: 10px; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; font-size: 1rem;">
                         <small style="color: var(--text-light); font-size: 0.75rem;">Username only (no spaces allowed)</small>
                     </div>
                     <div class="form-group" style="margin-bottom: 1rem;" id="client-email-group">
                         <label>Email Address</label>
-                        <input type="email" id="client-email" placeholder="jane@example.com" style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 1rem;">
+                        <input type="email" id="client-email" placeholder="jane@example.com" style="width: 100%; padding: 10px; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; font-size: 1rem;">
                     </div>
                     <div class="form-group" style="margin-bottom: 1rem;" id="client-password-group">
                         <label>Password (For new clients)</label>
-                        <input type="password" id="client-password" placeholder="********" style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 1rem;">
+                        <input type="password" id="client-password" placeholder="********" style="width: 100%; padding: 10px; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; font-size: 1rem;">
                     </div>
                     <div class="form-group" style="margin-bottom: 1rem;">
                         <label>Phone</label>
-                        <input type="tel" id="client-phone" required placeholder="1234567890" style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 1rem;">
+                        <input type="tel" id="client-phone" required placeholder="1234567890" style="width: 100%; padding: 10px; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; font-size: 1rem;">
                     </div>
                     <div class="form-group" style="margin-bottom: 1rem;">
                         <label>Address</label>
-                        <input type="text" id="client-address" required placeholder="123 Main St" style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 1rem;">
+                        <input type="text" id="client-address" required placeholder="123 Main St" style="width: 100%; padding: 10px; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; font-size: 1rem;">
                     </div>
                     <div class="form-group" style="margin-bottom: 1rem;">
                         <label>Status</label>
-                        <select id="client-status" required style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 1rem;">
+                        <select id="client-status" required style="width: 100%; padding: 10px; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; font-size: 1rem;">
                             <option value="Active">Active</option>
                             <option value="Inactive">Inactive</option>
                             <option value="Expired">Expired</option>
@@ -629,7 +629,7 @@
                     <input type="hidden" id="schedule-id">
                     <div class="form-group" style="margin-bottom: 1rem;">
                         <label>Select Client</label>
-                        <select id="schedule-client" required style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 1rem;">
+                        <select id="schedule-client" required style="width: 100%; padding: 10px; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; font-size: 1rem;">
                             <option value="">-- Choose a Client --</option>
                             <!-- Populated by JavaScript -->
                         </select>
@@ -637,17 +637,17 @@
                     </div>
                     <div class="form-group" style="margin-bottom: 1rem;">
                         <label>Session Type</label>
-                        <select id="schedule-type" style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 1rem;">
+                        <select id="schedule-type" style="width: 100%; padding: 10px; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; font-size: 1rem;">
                             <option value="">Standard Session</option>
                         </select>
                     </div>
                     <div class="form-group" style="margin-bottom: 1rem;">
                         <label>Date & Time</label>
-                        <input type="datetime-local" id="schedule-datetime" required style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 1rem;">
+                        <input type="datetime-local" id="schedule-datetime" required style="width: 100%; padding: 10px; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; font-size: 1rem;">
                     </div>
                     <div class="form-group" style="margin-bottom: 1rem;">
                         <label>Notes</label>
-                        <textarea id="schedule-notes" rows="2" placeholder="Optional notes..." style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 1rem; resize: vertical;"></textarea>
+                        <textarea id="schedule-notes" rows="2" placeholder="Optional notes..." style="width: 100%; padding: 10px; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; font-size: 1rem; resize: vertical;"></textarea>
                     </div>
                     <button type="submit" class="workout-action action-btn" style="width:100%">Confirm Session</button>
                 </form>
@@ -698,7 +698,7 @@
     </div>
 
 
-    <script src="/static/js/trainer_dashboard.js"></script>
+    <script src="/static/js/trainer_dashboard.js?v=8"></script>
     <script>
         // Mobile Menu Toggle
         const menuToggle = document.getElementById('menuToggle');

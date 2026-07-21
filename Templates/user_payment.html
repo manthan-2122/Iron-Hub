@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - Iron Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/user_dashboard.css?v=8">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 2rem;
+            background: #0e0d0d;
+        }
+        .payment-container {
+            background: rgba(20, 20, 35, 0.5) !important;
+            border: 1px solid rgba(255, 255, 255, 0.08) !important;
+            backdrop-filter: blur(20px) !important;
+            border-radius: 20px;
+            padding: 3rem;
+            width: 100%;
+            max-width: 500px;
+            color: #ffffff;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .qr-code-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 1.5rem;
+            border-radius: 16px;
+            display: inline-block;
+            margin: 2rem 0;
+        }
+        .qr-code-box img {
+            border-radius: 8px;
+        }
+        .plan-details {
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 1.5rem;
+        }
+        .plan-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #8b5cf6;
+            margin-bottom: 0.5rem;
+        }
+        .plan-price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #ffffff;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .btn-confirm {
+            flex: 1;
+            background: linear-gradient(135deg, #8b5cf6, #3b82f6);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-confirm:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+        }
+        .btn-cancel {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            color: #94a3b8;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 1rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .btn-cancel:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        #toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Elements -->
+    <div class="blob" style="top: -100px; left: -100px; background: #8b5cf6;"></div>
+    <div class="blob" style="bottom: -100px; right: -100px; background: #3b82f6;"></div>
+
+    <div class="payment-container">
+        <h2 style="margin-top:0; margin-bottom: 0.5rem; font-size: 1.8rem;">Complete Payment</h2>
+        <p style="color: #94a3b8; margin-bottom: 0;">Scan the QR code to confirm your subscription.</p>
+
+        <div class="plan-details">
+            <div class="plan-name" id="display-plan-name">Loading Plan...</div>
+            <div class="plan-price" id="display-plan-price">₹0</div>
+        </div>
+
+        <div class="qr-code-box">
+            <img id="qr-code-img" src="" alt="Payment QR Code" width="200" height="200">
+            <p style="margin-top: 1rem; color: #94a3b8; font-size: 0.9rem;">Mock payment gateway</p>
+        </div>
+
+        <div class="action-buttons">
+            <a href="/dashboard" class="btn-cancel">Cancel</a>
+            <button class="btn-confirm" onclick="confirmPayment()">Confirm Payment</button>
+        </div>
+    </div>
+
+    <div id="toast-container"></div>
+
+    <script>
+        const validPlans = {
+            'Basic': 3999,
+            'Standard': 7999,
+            'Premium': 11999,
+            '1 Month': 499,
+            '3 Months': 1399,
+            '6 Months': 5555
+        };
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const planName = urlParams.get('plan');
+        
+        if (!planName || !validPlans[planName]) {
+            document.querySelector('.payment-container').innerHTML = '<h2>Error: Invalid Plan Selected.</h2><br><a href="/dashboard" class="btn-cancel">Return to Dashboard</a>';
+        } else {
+            const price = validPlans[planName];
+            document.getElementById('display-plan-name').textContent = planName + ' Plan';
+            document.getElementById('display-plan-price').textContent = '₹' + price;
+            
+            // Generate mock QR code with amount data
+            document.getElementById('qr-code-img').src = 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=IronHub_Payment_Amount_' + price + '_Plan_' + encodeURIComponent(planName);
+        }
+
+        async function confirmPayment() {
+            const btn = document.querySelector('.btn-confirm');
+            btn.disabled = true;
+            btn.textContent = 'Processing...';
+
+            try {
+                const res = await fetch('/api/user/subscription', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ plan: planName })
+                });
+                const data = await res.json();
+                
+                if (res.ok) {
+                    showToast(data.message, 'success');
+                    setTimeout(() => {
+                        window.location.href = '/dashboard';
+                    }, 2000);
+                } else {
+                    showToast(data.error || 'Payment failed.', 'error');
+                    btn.disabled = false;
+                    btn.textContent = 'Confirm Payment';
+                }
+            } catch (err) { 
+                showToast('Network error: ' + err.message, 'error');
+                btn.disabled = false;
+                btn.textContent = 'Confirm Payment';
+            }
+        }
+
+        function showToast(message, type='success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 	oast toast-\;
+            toast.style.background = type === 'success' ? 'rgba(16, 185, 129, 0.9)' : 'rgba(239, 68, 68, 0.9)';
+            toast.style.color = 'white';
+            toast.style.padding = '12px 24px';
+            toast.style.borderRadius = '8px';
+            toast.style.marginBottom = '10px';
+            toast.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+            toast.style.backdropFilter = 'blur(10px)';
+            toast.textContent = message;
+            
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.5s ease';
+                setTimeout(() => toast.remove(), 500);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
