@@ -16,6 +16,7 @@ function calculateBMI() {
         headers: {
             'Content-Type': 'application/json'
         },
+        credentials: 'same-origin',
         body: JSON.stringify({ height, weight })
     })
     .then(response => response.json())
@@ -68,7 +69,7 @@ function adjustColor(color, percent) {
 
 // ===== MEMBERSHIP EXPIRY NOTIFICATION =====
 function checkMembershipExpiry() {
-    fetch('/api/features/membership-expiry')
+    fetch('/api/features/membership-expiry', { credentials: 'same-origin' })
         .then(response => response.json())
         .then(data => {
             if (data.error) {
@@ -117,6 +118,7 @@ function sendChatMessage() {
         headers: {
             'Content-Type': 'application/json'
         },
+        credentials: 'same-origin',
         body: JSON.stringify({ message })
     })
     .then(response => response.json())
@@ -131,6 +133,7 @@ function sendChatMessage() {
             headers: {
                 'Content-Type': 'application/json'
             },
+            credentials: 'same-origin',
             body: JSON.stringify({})
         })
         .then(resp => resp.json())
@@ -175,7 +178,7 @@ function sendQuickMessage(message) {
 }
 
 function loadChatMessages() {
-    fetch('/api/features/chat/messages')
+    fetch('/api/features/chat/messages', { credentials: 'same-origin' })
         .then(response => response.json())
         .then(data => {
             if (data.error) {
@@ -183,10 +186,15 @@ function loadChatMessages() {
                 return;
             }
             const messagesContainer = document.getElementById('chat-messages');
-            messagesContainer.innerHTML = '';
-            data.messages.forEach(message => {
-                addChatMessage(message.message, message.sender_type, message.created_at);
-            });
+            if (!messagesContainer) return;
+            const currentCount = messagesContainer.querySelectorAll('.chat-message').length;
+            
+            if (data.messages && data.messages.length > currentCount) {
+                messagesContainer.innerHTML = '';
+                data.messages.forEach(message => {
+                    addChatMessage(message.message, message.sender_type, message.created_at);
+                });
+            }
         })
         .catch(error => {
             console.warn('Error loading chat messages:', error);
@@ -251,6 +259,7 @@ function saveEmailNotifications() {
         headers: {
             'Content-Type': 'application/json'
         },
+        credentials: 'same-origin',
         body: JSON.stringify(preferences)
     })
     .then(response => response.json())
@@ -268,7 +277,7 @@ function saveEmailNotifications() {
 }
 
 function loadEmailPreferences() {
-    fetch('/api/features/email-preferences')
+    fetch('/api/features/email-preferences', { credentials: 'same-origin' })
         .then(response => response.json())
         .then(data => {
             if (data.error) {
@@ -304,8 +313,9 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Load chat history
+    // Load chat history and poll for new messages
     loadChatMessages();
+    setInterval(loadChatMessages, 3000);
 
     // Initialize email notification toggles
     const emailToggles = [
@@ -369,3 +379,78 @@ if (typeof showToast === 'undefined') {
         }, duration);
     };
 }
+
+// ===== FAKE PAYMENT PROCESSING =====
+function processFakePayment() {
+    const name = document.getElementById('pay_name').value.trim();
+    const addr1 = document.getElementById('pay_addr1').value.trim();
+    const city = document.getElementById('pay_city').value.trim();
+    const state = document.getElementById('pay_state').value;
+    const zip = document.getElementById('pay_zip').value.trim();
+
+    if (!name || !addr1 || !city || !zip) {
+        showToast('Please fill in all required billing fields', 'warning');
+        return;
+    }
+
+    const payBtn = document.getElementById('process-payment-btn');
+    const originalText = payBtn.textContent;
+    payBtn.textContent = 'Processing...';
+    payBtn.disabled = true;
+
+    const payload = {
+        billing_name: name,
+        address_line1: addr1,
+        address_line2: document.getElementById('pay_addr2').value.trim(),
+        city: city,
+        state: state,
+        zip_code: zip,
+        payment_method: 'Card',
+        amount: 112.92
+    };
+
+    fetch('/api/payment/process', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'same-origin',
+        body: JSON.stringify(payload)
+    })
+    .then(res => res.json())
+    .then(data => {
+        payBtn.textContent = originalText;
+        payBtn.disabled = false;
+        
+        if (data.error) {
+            showToast(data.error, 'error');
+        } else {
+            showToast('✅ Payment processed successfully!', 'success');
+            // Clear fields
+            document.getElementById('pay_name').value = '';
+            document.getElementById('pay_addr1').value = '';
+            document.getElementById('pay_addr2').value = '';
+            document.getElementById('pay_city').value = '';
+            document.getElementById('pay_zip').value = '';
+            
+            // Redirect to dashboard
+            setTimeout(() => {
+                const dashLink = document.querySelector('a[href="#dashboard"]');
+                if (dashLink) dashLink.click();
+            }, 1500);
+        }
+    })
+    .catch(err => {
+        payBtn.textContent = originalText;
+        payBtn.disabled = false;
+        showToast('Error processing payment', 'error');
+        console.error(err);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const processBtn = document.getElementById('process-payment-btn');
+    if (processBtn) {
+        processBtn.addEventListener('click', processFakePayment);
+    }
+});

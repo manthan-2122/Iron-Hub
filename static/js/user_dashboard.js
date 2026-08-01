@@ -1073,15 +1073,15 @@ document.addEventListener('DOMContentLoaded', function () {
             overlay.innerHTML = `
                 <div style="text-align:center;padding:2rem;">
                     <div style="font-size:3rem;margin-bottom:1rem;">&#128274;</div>
-                    <h2 style="font-size:1.4rem;font-weight:800;color:#1e293b;margin-bottom:0.5rem;">Subscription Required</h2>
-                    <p style="color:#64748b;font-size:0.95rem;margin-bottom:1.5rem;max-width:320px;">
+                    <h2 style="font-size:1.4rem;font-weight:800;color:#ffffff;margin-bottom:0.5rem;">Subscription Required</h2>
+                    <p style="color:#cbd5e1;font-size:0.95rem;margin-bottom:1.5rem;max-width:320px;">
                         You need an active plan to access this feature. Choose a plan to unlock the full dashboard.
                     </p>
-                    <button class="workout-action" onclick="document.querySelector('a[href=\'#subscription\']').click()">
+                    <button class="workout-action" style="padding:0.75rem 1.5rem;font-size:1rem;" onclick="document.querySelector('a[href=&quot;#subscription&quot;]').click()">
                         &#128179; Choose a Plan
                     </button>
                 </div>`;
-            overlay.style.cssText = 'position:absolute;inset:0;background:rgba(248,250,252,0.93);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:50;border-radius:20px;';
+            overlay.style.cssText = 'position:absolute;inset:0;background:rgba(20, 20, 35, 0.93);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;z-index:50;border-radius:20px;';
             sec.style.position = 'relative';
             sec.appendChild(overlay);
         });

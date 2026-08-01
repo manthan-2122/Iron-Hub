@@ -327,23 +327,29 @@ async function selectTrainerChatUser(userId, label) {
         DOM.trainerChatInput.placeholder = 'Type your reply...';
     }
     await loadTrainerChatMessages(userId);
+    
+    if (state.chatPollInterval) clearInterval(state.chatPollInterval);
+    state.chatPollInterval = setInterval(() => loadTrainerChatMessages(userId, true), 3000);
 }
 
-async function loadTrainerChatMessages(userId) {
+async function loadTrainerChatMessages(userId, isPolling = false) {
     if (!DOM.trainerChatMessages) return;
-    DOM.trainerChatMessages.innerHTML = '<p style="color: var(--text-light);">Loading messages...</p>';
+    if (!isPolling) DOM.trainerChatMessages.innerHTML = '<p style="color: var(--text-light);">Loading messages...</p>';
     try {
         const response = await fetch(`/api/features/chat/messages/${userId}`);
         const data = await response.json();
         if (data.messages) {
-            DOM.trainerChatMessages.innerHTML = '';
-            data.messages.forEach(message => addTrainerChatMessage(message));
-            DOM.trainerChatMessages.scrollTop = DOM.trainerChatMessages.scrollHeight;
+            const currentCount = Array.from(DOM.trainerChatMessages.children).filter(c => c.tagName === 'DIV').length;
+            if (!isPolling || data.messages.length > currentCount) {
+                DOM.trainerChatMessages.innerHTML = '';
+                data.messages.forEach(message => addTrainerChatMessage(message));
+                DOM.trainerChatMessages.scrollTop = DOM.trainerChatMessages.scrollHeight;
+            }
         } else {
-            DOM.trainerChatMessages.innerHTML = '<p style="color: var(--text-light);">No messages available.</p>';
+            if (!isPolling) DOM.trainerChatMessages.innerHTML = '<p style="color: var(--text-light);">No messages available.</p>';
         }
     } catch (error) {
-        DOM.trainerChatMessages.innerHTML = '<p style="color: var(--danger);">Unable to load messages.</p>';
+        if (!isPolling) DOM.trainerChatMessages.innerHTML = '<p style="color: var(--danger);">Unable to load messages.</p>';
         console.error('Failed to load chat messages:', error);
     }
 }

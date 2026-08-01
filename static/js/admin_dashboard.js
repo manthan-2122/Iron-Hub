@@ -517,9 +517,9 @@ document.getElementById('save-assignment-btn')?.addEventListener('click', async 
         const res = await fetch(`/api/admin/trainer/${selectedTrainerId}/assign-clients`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            credentials: 'include',
+            credentials: 'same-origin',
             body: JSON.stringify({ client_ids: clientIds })
-});
+        });
         
         const data = await res.json();
         

@@ -149,6 +149,34 @@ def create_workout_progress_table():
 
 create_workout_progress_table()
 
+# ── Create payments table if not exists ─────────
+def create_payments_table():
+    try:
+        conn = db_connection()
+        with conn.cursor() as cur:
+            cur.execute("""
+                CREATE TABLE IF NOT EXISTS payments (
+                    id             INT AUTO_INCREMENT PRIMARY KEY,
+                    user_id        INT NOT NULL,
+                    billing_name   VARCHAR(255) NOT NULL,
+                    address_line1  VARCHAR(255) NOT NULL,
+                    address_line2  VARCHAR(255),
+                    city           VARCHAR(100) NOT NULL,
+                    state          VARCHAR(100) NOT NULL,
+                    zip_code       VARCHAR(20) NOT NULL,
+                    payment_method VARCHAR(50) NOT NULL,
+                    amount         DECIMAL(10,2) NOT NULL,
+                    created_at     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+                )
+            """)
+            conn.commit()
+        conn.close()
+    except Exception as e:
+        print(f"Error creating payments table: {e}")
+
+create_payments_table()
+
 # ── Create email_preferences table for new features ────────
 def create_email_preferences_table():
     try:
@@ -2669,6 +2697,45 @@ def api_export_report():
             download_name=f'fitness-progress-report-{datetime.now().strftime("%Y%m%d-%H%M%S")}.txt',
             mimetype='text/plain'
         )
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    finally:
+        conn.close()
+
+# ── API: Process Payment (Mock) ─────────────────────────
+@app.route('/api/payment/process', methods=['POST'])
+def api_process_payment():
+    if 'user_id' not in session or session.get('user_role') != 'user':
+        return jsonify({'error': 'Unauthorized'}), 403
+    
+    user_id = session['user_id']
+    data = request.get_json()
+    
+    try:
+        conn = db_connection()
+        with conn.cursor() as cur:
+            cur.execute("""
+                INSERT INTO payments (
+                    user_id, billing_name, address_line1, address_line2, 
+                    city, state, zip_code, payment_method, amount
+                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """, (
+                user_id,
+                data.get('billing_name', ''),
+                data.get('address_line1', ''),
+                data.get('address_line2', ''),
+                data.get('city', ''),
+                data.get('state', ''),
+                data.get('zip_code', ''),
+                data.get('payment_method', 'Card'),
+                data.get('amount', 112.92)
+            ))
+            conn.commit()
+            
+        # Optional: You could update the subscription status here if needed
+        # but the prompt specifically requested saving to DB and ignoring complex backend logic
+        
+        return jsonify({'message': 'Payment processed successfully', 'status': 'success'})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
     finally:
