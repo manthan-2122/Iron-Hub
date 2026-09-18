@@ -166,7 +166,7 @@ document.addEventListener('DOMContentLoaded', function () {
             this.classList.add('active');
             const targetId = this.getAttribute('href').substring(1);
             sections.forEach(s => s.classList.toggle('active', s.id === targetId));
-            const titles = { profile: 'My Profile', workouts: 'My Workouts', diet: 'Diet Plan', progress: 'My Progress', bmi: 'BMI Calculator', chat: 'Live Chat', subscription: 'Subscription Plans', payment: 'Payment', settings: 'Settings' };
+            const titles = { profile: 'My Profile', trainers: 'Trainers', workouts: 'My Workouts', diet: 'Diet Plan', progress: 'My Progress', bmi: 'BMI Calculator', chat: 'Live Chat', subscription: 'Subscription Plans', payment: 'Payment', settings: 'Settings' };
             const h = document.querySelector('.welcome-text h1');
             if (h) {
                 if (targetId === 'dashboard') {
@@ -178,6 +178,92 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     });
+
+    // ===== Trainer Directory =====
+    const trainerCards = document.getElementById('trainer-cards');
+    const trainerListView = document.getElementById('trainer-list-view');
+    const trainerDetailView = document.getElementById('trainer-detail-view');
+    const trainersBackButton = document.getElementById('trainers-back-btn');
+
+    const trainerValue = (value, fallback = 'Not provided') => value || fallback;
+    const trainerName = (trainer) => `${trainer.first_name || ''} ${trainer.last_name || ''}`.trim() || 'Trainer';
+
+    const showTrainerDetails = async (trainerId) => {
+        trainerListView.style.display = 'none';
+        trainerDetailView.style.display = 'block';
+        trainersBackButton.style.display = 'inline-flex';
+        trainerDetailView.innerHTML = '<div class="trainer-empty-state">Loading trainer profile...</div>';
+
+        try {
+            const response = await fetch(`/api/user/trainers/${trainerId}`, { credentials: 'same-origin' });
+            const trainer = await parseJsonResponse(response);
+            if (!response.ok) throw new Error(trainer.error || 'Unable to load trainer profile.');
+            const name = trainerName(trainer);
+            const rate = trainer.hourly_rate ? `₹${trainer.hourly_rate} / session` : 'Contact trainer for pricing';
+            trainerDetailView.innerHTML = `
+                <div class="trainer-profile-card">
+                    <div class="trainer-profile-avatar">${name.charAt(0).toUpperCase()}</div>
+                    <div class="trainer-profile-summary">
+                        <h3>${name}</h3>
+                        <p class="trainer-profile-role">${trainerValue(trainer.specialization, 'Professional Trainer')} · ${trainer.experience || 0} Years · 1800+ Clients</p>
+                        <p class="trainer-profile-focus">${trainerValue(trainer.bio, 'Dedicated to helping members build sustainable strength and confidence.')}</p>
+                        <span class="trainer-rating">★ 4.9 (1024 reviews)</span>
+                    </div>
+                    <div class="trainer-profile-actions">
+                        <button type="button" class="trainer-book-btn" onclick="alert('Booking will be available soon.')">Book 1-on-1 Session</button>
+                        <button type="button" class="trainer-chat-btn">Chat with Trainer</button>
+                        <span class="trainer-verification">✓ Background Verified · ✓ Certified · ✓ Insured</span>
+                    </div>
+                </div>
+                <div class="trainer-stat-grid">
+                    <div><span>Experience</span><strong>${trainer.experience || 0} Years</strong></div>
+                    <div><span>Specialization</span><strong>${trainerValue(trainer.specialization)}</strong></div>
+                    <div><span>Availability</span><strong>${trainerValue(trainer.availability)}</strong></div>
+                    <div><span>Session Rate</span><strong>${rate}</strong></div>
+                </div>
+                <div class="trainer-info-grid">
+                    <div class="trainer-info-panel"><h3>About &amp; Philosophy</h3><p>${trainerValue(trainer.bio, 'This trainer has not added a biography yet.')}</p><h4>Certifications</h4><p>${trainerValue(trainer.certifications)}</p></div>
+                    <div class="trainer-info-panel"><h3>Programs &amp; Focus</h3><p>• ${trainerValue(trainer.specialization)}<br>• Strength and mobility coaching<br>• Personalised guidance</p></div>
+                </div>`;
+            trainerDetailView.querySelector('.trainer-chat-btn')?.addEventListener('click', () => {
+                document.querySelector('a[href="#live-chat"]')?.click();
+            });
+        } catch (error) {
+            trainerDetailView.innerHTML = `<div class="trainer-empty-state">${error.message}</div>`;
+        }
+    };
+
+    const loadTrainers = async () => {
+        if (!trainerCards) return;
+        trainerCards.innerHTML = '<div class="trainer-empty-state">Loading trainers...</div>';
+        try {
+            const response = await fetch('/api/user/trainers', { credentials: 'same-origin' });
+            const trainers = await parseJsonResponse(response);
+            if (!response.ok) throw new Error(trainers.error || 'Unable to load trainers.');
+            if (!trainers.length) {
+                trainerCards.innerHTML = '<div class="trainer-empty-state">No trainers are available right now.</div>';
+                return;
+            }
+            trainerCards.innerHTML = trainers.map(trainer => {
+                const name = trainerName(trainer);
+                return `<button type="button" class="trainer-card" data-trainer-id="${trainer.id}">
+                    <span class="trainer-card-avatar">${name.charAt(0).toUpperCase()}</span>
+                    <span class="trainer-card-content"><strong>${name}</strong><small>${trainerValue(trainer.specialization, 'Professional Trainer')}</small><small>Experience: ${trainer.experience || 0} Years</small></span>
+                    <span class="trainer-card-action">View Profile</span>
+                </button>`;
+            }).join('');
+            trainerCards.querySelectorAll('[data-trainer-id]').forEach(card => card.addEventListener('click', () => showTrainerDetails(card.dataset.trainerId)));
+        } catch (error) {
+            trainerCards.innerHTML = `<div class="trainer-empty-state">${error.message}</div>`;
+        }
+    };
+
+    trainersBackButton?.addEventListener('click', () => {
+        trainerDetailView.style.display = 'none';
+        trainerListView.style.display = 'block';
+        trainersBackButton.style.display = 'none';
+    });
+    document.querySelector('a[href="#trainers"]')?.addEventListener('click', loadTrainers);
 
     const profileHeader = document.querySelector('.user-profile');
     if (profileHeader) {

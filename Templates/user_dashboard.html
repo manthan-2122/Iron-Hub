@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Dashboard - Iron Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/user_dashboard.css?v=8">
+    <link rel="stylesheet" href="/static/css/user_dashboard.css?v=9">
     <link rel="stylesheet" href="/static/css/new_features.css?v=8">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-</head>
+</head> 
 
 <body>
     <!-- Mobile Navbar -->
@@ -49,6 +49,12 @@
                 <a href="#profile">
                     <span class="nav-icon">👤</span>
                     Profile
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#trainers">
+                    <span class="nav-icon">🏋️</span>
+                    Trainers INFO.
                 </a>
             </li>
             <li class="nav-item">
@@ -232,6 +238,23 @@
                     </div>
                 </div>
             </div>
+        </section>
+
+        <!-- Trainers Section -->
+        <section id="trainers" class="dashboard-section">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Trainers</h2>
+                    <p class="section-subtitle">Choose your personal trainer</p>
+                </div>
+                <button type="button" id="trainers-back-btn" class="trainer-back-btn" style="display: none;">← All Trainers</button>
+            </div>
+
+            <div id="trainer-list-view">
+                <div id="trainer-cards" class="trainer-cards" aria-live="polite"></div>
+            </div>
+
+            <div id="trainer-detail-view" class="trainer-detail-view" style="display: none;" aria-live="polite"></div>
         </section>
 
         <!-- Profile Section -->
@@ -1158,6 +1181,16 @@
                                             </option>
                                             <option value="New York" style="background: var(--bg-dark);">New York
                                             </option>
+                                            <option value="Gujarat" style="background: var(--bg-dark);">Gujarat</option>
+                                            <option value="Maharashtra" style="background: var(--bg-dark);">Maharashtra</option>
+                                            <option value="Rajasthan" style="background: var(--bg-dark);">Rajasthan</option>
+                                            <option value="Punjab" style="background: var(--bg-dark);">Punjab</option>
+                                            <option value="Haryana" style="background: var(--bg-dark);">Haryana</option>
+                                            <option value="Goa" style="background: var(--bg-dark);">Goa</option>
+                                            <option value="Karnataka" style="background: var(--bg-dark);">Karnataka</option>
+                                            <option value="Tamil Nadu" style="background: var(--bg-dark);">Tamil Nadu</option>
+                                            <option value="Kerala" style="background: var(--bg-dark);">Kerala</option>
+                                            <option value="West Bengal" style="background: var(--bg-dark);">West Bengal</option>
                                         </select>
                                     </div>
                                     <div style="flex: 1; min-width: 100px;">
@@ -1170,65 +1203,19 @@
                             </div>
                         </div>
 
-                        <!-- Payment Method Card -->
+                        <!-- QR Payment Card -->
                         <div
-                            style="background: rgba(25, 25, 40, 0.6); border: 1px solid rgba(255, 255, 255, 0.05); padding: 1.5rem; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
+                            style="background: rgba(25, 25, 40, 0.6); border: 1px solid rgba(255, 255, 255, 0.05); padding: 1.5rem; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.2); text-align: center;">
                             <h3
-                                style="margin-bottom: 1.5rem; font-size: 1.1rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.75rem;">
+                                style="margin-bottom: 1.5rem; font-size: 1.1rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.75rem; text-align: left;">
                                 Payment Method</h3>
-
-                            <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
-                                <div
-                                    style="flex: 1; padding: 1rem; border: 2px solid #667eea; border-radius: 8px; text-align: center; cursor: pointer; background: rgba(102, 126, 234, 0.1);">
-                                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">💳</div>
-                                    <div style="font-size: 0.9rem; font-weight: 500;">Card</div>
-                                </div>
-                                <div
-                                    style="flex: 1; padding: 1rem; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; text-align: center; cursor: pointer; opacity: 0.6;">
-                                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">📱</div>
-                                    <div style="font-size: 0.9rem; font-weight: 500;">Wallet</div>
-                                </div>
-                                <div
-                                    style="flex: 1; padding: 1rem; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; text-align: center; cursor: pointer; opacity: 0.6;">
-                                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">💵</div>
-                                    <div style="font-size: 0.9rem; font-weight: 500;">COD</div>
-                                </div>
-                            </div>
-
-                            <div style="display: flex; flex-direction: column; gap: 1rem;">
-                                <div>
-                                    <label
-                                        style="display: block; margin-bottom: 0.5rem; font-size: 0.85rem; color: var(--text-light);">Name
-                                        on Card</label>
-                                    <input type="text" placeholder="First & Last Name"
-                                        style="width: 100%; padding: 0.75rem; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: white;">
-                                </div>
-                                <div>
-                                    <label
-                                        style="display: block; margin-bottom: 0.5rem; font-size: 0.85rem; color: var(--text-light);">Card
-                                        Number</label>
-                                    <input type="text" placeholder="0000 0000 0000 0000"
-                                        style="width: 100%; padding: 0.75rem; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: white;">
-                                </div>
-                                <div style="display: flex; gap: 1rem;">
-                                    <div style="flex: 1;">
-                                        <label
-                                            style="display: block; margin-bottom: 0.5rem; font-size: 0.85rem; color: var(--text-light);">Expiry</label>
-                                        <div style="display: flex; gap: 0.5rem;">
-                                            <input type="text" placeholder="MM"
-                                                style="width: 100%; padding: 0.75rem; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: white;">
-                                            <input type="text" placeholder="YYYY"
-                                                style="width: 100%; padding: 0.75rem; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: white;">
-                                        </div>
-                                    </div>
-                                    <div style="flex: 1;">
-                                        <label
-                                            style="display: block; margin-bottom: 0.5rem; font-size: 0.85rem; color: var(--text-light);">CVV</label>
-                                        <input type="text" placeholder="CVV"
-                                            style="width: 100%; padding: 0.75rem; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: white;">
-                                    </div>
-                                </div>
-                            </div>
+                            <p style="margin-bottom: 1rem; color: var(--text-light);">Scan the QR code to pay securely.</p>
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&amp;data=upi%3A%2F%2Fpay%3Fpa%3Dice%40upi%26pn%3DIron%2520Hub%26cu%3DINR"
+                                alt="Iron Hub payment QR code" width="220" height="220"
+                                style="display: block; margin: 0 auto 1rem; padding: 0.5rem; background: white; border-radius: 8px;">
+                            <p style="margin-bottom: 1rem; color: var(--text-light); font-size: 0.85rem;">After completing payment, confirm below.</p>
+                            <button type="button" id="process-payment-btn" class="workout-action"
+                                style="width: 100%; background: var(--success); color: white;">Confirm Payment</button>
                         </div>
                     </div>
                 </div>

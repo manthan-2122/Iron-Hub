@@ -5,7 +5,7 @@ Follow these steps to start the Flask backend server.
 ### 1. Open a Terminal
 Open PowerShell and navigate to the project folder:
 ```powershell
-cd "C:\Users\patel\Desktop\6th Sem Project\Iron-Hub\Iron-Hub>"
+cd "C:\Users\patel\Desktop\6th Sem Project\Iron-Hub>"
 ```
 
 ### 2. Activate the Python Virtual Environment

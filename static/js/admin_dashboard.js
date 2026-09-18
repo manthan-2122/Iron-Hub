@@ -19,6 +19,8 @@ function switchTab(targetId) {
     navLinks.forEach(a => {
         if (a.getAttribute('href') === '#' + targetId) a.classList.add('active');
     });
+    if (targetId === 'reports') loadPlatformAnalytics();
+    if (targetId === 'financials') loadFinancials();
 }
 
 navLinks.forEach(link => {
@@ -65,6 +67,67 @@ async function loadDashboardStats() {
         });
     } catch {
         console.error('Failed to load stats');
+    }
+}
+
+function formatStorage(bytes) {
+    const units = ['B', 'KB', 'MB', 'GB', 'TB'];
+    let value = Number(bytes);
+    let unit = 0;
+    while (value >= 1024 && unit < units.length - 1) {
+        value /= 1024;
+        unit++;
+    }
+    return `${value.toFixed(value >= 100 ? 0 : 1)}${units[unit]}`;
+}
+
+async function loadPlatformAnalytics() {
+    try {
+        const res = await fetch('/api/admin/analytics');
+        const analytics = await res.json();
+        if (!res.ok) throw new Error(analytics.error || 'Failed to load analytics');
+
+        const growthPercent = Math.min((analytics.total_users / analytics.user_target) * 100, 100);
+        document.getElementById('analytics-user-growth-bar').style.width = `${growthPercent}%`;
+        document.getElementById('analytics-user-target').textContent = `Target: ${analytics.user_target} Users`;
+        document.getElementById('analytics-user-current').textContent = `Current: ${analytics.total_users} (${growthPercent.toFixed(1)}%)`;
+        document.getElementById('analytics-server-load-bar').style.width = `${analytics.server_load}%`;
+        document.getElementById('analytics-server-load').textContent = `Current: ${analytics.server_load}%`;
+        document.getElementById('analytics-storage-bar').style.width = `${analytics.storage_percent}%`;
+        document.getElementById('analytics-storage-total').textContent = `Total: ${formatStorage(analytics.storage_total)}`;
+        document.getElementById('analytics-storage-used').textContent = `Used: ${formatStorage(analytics.storage_used)}`;
+    } catch (error) {
+        console.error('Failed to load platform analytics:', error);
+    }
+}
+
+async function loadFinancials() {
+    try {
+        const res = await fetch('/api/admin/financials');
+        const financials = await res.json();
+        if (!res.ok) throw new Error(financials.error || 'Failed to load financials');
+
+        const formatCurrency = value => `₹${Number(value || 0).toLocaleString('en-IN', { maximumFractionDigits: 2 })}`;
+        document.getElementById('financial-total-revenue').textContent = formatCurrency(financials.total_revenue);
+        document.getElementById('financial-trainer-payouts').textContent = formatCurrency(financials.trainer_payouts);
+        document.getElementById('financial-operational-costs').textContent = formatCurrency(financials.operational_costs);
+        document.getElementById('financial-net-profit').textContent = formatCurrency(financials.net_profit);
+
+        const tbody = document.getElementById('financial-transactions-tbody');
+        if (!financials.transactions.length) {
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:2rem;color:#94a3b8;">No transactions yet</td></tr>';
+            return;
+        }
+        tbody.innerHTML = financials.transactions.map(transaction => `<tr>
+            <td>${transaction.id}</td>
+            <td>${transaction.created_at}</td>
+            <td>${transaction.billing_name}</td>
+            <td>${transaction.payment_method}</td>
+            <td>${formatCurrency(transaction.amount)}</td>
+            <td>${transaction.status}</td>
+        </tr>`).join('');
+    } catch (error) {
+        console.error('Failed to load financials:', error);
     }
 }
 
@@ -300,6 +363,8 @@ navLinks.forEach(link => {
 
 // -- Init
 loadDashboardStats();
+loadPlatformAnalytics();
+loadFinancials();
 loadRecentRegistrations();
 loadUsers();
 loadTrainers().then(() => {

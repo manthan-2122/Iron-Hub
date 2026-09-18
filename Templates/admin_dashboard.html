@@ -113,7 +113,7 @@
                 <div class="stat-card">
                     <div class="stat-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">💵</div>
                     <div class="stat-info">
-                        <h3>₹0</h3>
+                        <h3 id="financial-total-revenue">₹0</h3>
                         <span class="stat-label">Monthly Revenue</span>
                     </div>
                 </div>
@@ -287,19 +287,19 @@
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-info">
-                        <h3>₹0</h3>
+                        <h3 id="financial-trainer-payouts">₹0</h3>
                         <span class="stat-label">Total Revenue (YTD)</span>
                     </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-info">
-                        <h3>₹0</h3>
+                        <h3 id="financial-operational-costs">₹0</h3>
                         <span class="stat-label">Trainer Payouts</span>
                     </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-info">
-                        <h3>₹0</h3>
+                        <h3 id="financial-net-profit">₹0</h3>
                         <span class="stat-label">Operational Costs</span>
                     </div>
                 </div>
@@ -328,7 +328,7 @@
                                 <th>Status</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="financial-transactions-tbody">
                             <tr>
                                 <td colspan="6" style="text-align:center;padding:2rem;color:#94a3b8;">No transactions yet</td>
                             </tr>
@@ -345,36 +345,36 @@
                     <div style="margin-bottom: 2rem;">
                         <h4 style="margin-bottom: 10px;">User Growth</h4>
                         <div style="height: 20px; background: rgba(255, 255, 255, 0.08); border-radius: 10px; overflow: hidden;">
-                            <div style="width: 0%; height: 100%; background: var(--primary-color);"></div>
+                            <div id="analytics-user-growth-bar" style="width: 0%; height: 100%; background: var(--primary-color);"></div>
                         </div>
                         <div
                             style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-top: 5px; color: var(--text-light);">
-                            <span>Target: 2000 Users</span>
-                            <span>Current: 0 (0%)</span>
+                            <span id="analytics-user-target">Target: 2000 Users</span>
+                            <span id="analytics-user-current">Current: 0 (0%)</span>
                         </div>
                     </div>
 
                     <div style="margin-bottom: 2rem;">
                         <h4 style="margin-bottom: 10px;">Server Load</h4>
                         <div style="height: 20px; background: rgba(255, 255, 255, 0.08); border-radius: 10px; overflow: hidden;">
-                            <div style="width: 35%; height: 100%; background: var(--success);"></div>
+                            <div id="analytics-server-load-bar" style="width: 0%; height: 100%; background: var(--success);"></div>
                         </div>
                         <div
                             style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-top: 5px; color: var(--text-light);">
                             <span>Capacity: 100%</span>
-                            <span>Current: 35%</span>
+                            <span id="analytics-server-load">Current: 0%</span>
                         </div>
                     </div>
 
                     <div>
                         <h4 style="margin-bottom: 10px;">Storage Usage</h4>
                         <div style="height: 20px; background: rgba(255, 255, 255, 0.08); border-radius: 10px; overflow: hidden;">
-                            <div style="width: 10%; height: 100%; background: var(--success);"></div>
+                            <div id="analytics-storage-bar" style="width: 0%; height: 100%; background: var(--success);"></div>
                         </div>
                         <div
                             style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-top: 5px; color: var(--text-light);">
-                            <span>Total: 1TB</span>
-                            <span>Used: 100GB</span>
+                            <span id="analytics-storage-total">Total: --</span>
+                            <span id="analytics-storage-used">Used: --</span>
                         </div>
                     </div>
                 </div>
@@ -483,7 +483,7 @@
         style="position: fixed; bottom: 20px; right: 20px; z-index: 10000; display: flex; flex-direction: column; gap: 10px;">
     </div>
 
-    <script src="/static/js/admin_dashboard.js?v=8"></script>
+    <script src="/static/js/admin_dashboard.js?v=9"></script>
 </body>
 
 </html>

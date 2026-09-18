@@ -405,7 +405,7 @@ function processFakePayment() {
         city: city,
         state: state,
         zip_code: zip,
-        payment_method: 'Card',
+        payment_method: 'QR',
         amount: 112.92
     };
 

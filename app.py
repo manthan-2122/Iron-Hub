@@ -4,6 +4,13 @@ from localhost import db_connection
 from functools import wraps
 from io import BytesIO
 import hashlib
+import os
+import shutil
+
+try:
+    import psutil
+except ImportError:
+    psutil = None
 
 app = Flask(__name__, template_folder='Templates', static_folder='static')
 app.secret_key = 'ironhub_secret_key'
@@ -372,6 +379,51 @@ def admin_register():
 @login_required('user')
 def user_dashboard():
     return render_template('user_dashboard.html')
+
+@app.route('/api/user/trainers')
+@login_required('user')
+def api_user_trainers():
+    conn = db_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                """SELECT u.id, u.first_name, u.last_name,
+                          t.specialization, t.experience,
+                          tp.bio, tp.certifications, tp.hourly_rate,
+                          tp.availability, tp.profile_image
+                   FROM users u
+                   INNER JOIN trainers t ON u.id = t.user_id
+                   LEFT JOIN trainer_profiles tp ON u.id = tp.user_id
+                   WHERE u.role = 'trainer' AND u.status = 'Active'
+                   ORDER BY u.first_name, u.last_name"""
+            )
+            return jsonify(cur.fetchall())
+    finally:
+        conn.close()
+
+@app.route('/api/user/trainers/<int:trainer_id>')
+@login_required('user')
+def api_user_trainer_details(trainer_id):
+    conn = db_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                """SELECT u.id, u.first_name, u.last_name,
+                          t.specialization, t.experience,
+                          tp.phone, tp.bio, tp.certifications, tp.hourly_rate,
+                          tp.availability, tp.profile_image
+                   FROM users u
+                   INNER JOIN trainers t ON u.id = t.user_id
+                   LEFT JOIN trainer_profiles tp ON u.id = tp.user_id
+                   WHERE u.id = %s AND u.role = 'trainer' AND u.status = 'Active'""",
+                (trainer_id,)
+            )
+            trainer = cur.fetchone()
+        if not trainer:
+            return jsonify({'error': 'Trainer not found'}), 404
+        return jsonify(trainer)
+    finally:
+        conn.close()
 
 @app.route('/trainer/dashboard')
 @login_required('trainer')
@@ -758,6 +810,31 @@ def api_admin_stats():
     finally:
         conn.close()
 
+# ── Admin: Get live platform analytics ────────────────
+@app.route('/api/admin/analytics')
+def api_admin_analytics():
+    if session.get('user_role') != 'admin':
+        return jsonify({'error': 'Unauthorized'}), 403
+
+    conn = db_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute("SELECT COUNT(*) as count FROM users")
+            total_users = cur.fetchone()['count']
+    finally:
+        conn.close()
+
+    disk = shutil.disk_usage(os.path.abspath(os.sep))
+    server_load = psutil.cpu_percent(interval=0.1) if psutil else 0
+    return jsonify({
+        'total_users': total_users,
+        'user_target': 2000,
+        'server_load': round(server_load, 1),
+        'storage_total': disk.total,
+        'storage_used': disk.used,
+        'storage_percent': round((disk.used / disk.total) * 100, 1) if disk.total else 0
+    })
+
 # ── Admin: Get recent registrations ────────────────────
 @app.route('/api/admin/recent-users')
 def api_admin_recent_users():
@@ -774,6 +851,45 @@ def api_admin_recent_users():
         for u in users:
             u['created_at'] = u['created_at'].strftime('%b %d, %Y') if u['created_at'] else '—'
         return jsonify(users)
+    finally:
+        conn.close()
+
+# ── Admin: Get live financials ─────────────────────────
+@app.route('/api/admin/financials')
+def api_admin_financials():
+    if session.get('user_role') != 'admin':
+        return jsonify({'error': 'Unauthorized'}), 403
+
+    conn = db_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                """SELECT COALESCE(SUM(amount), 0) AS total
+                   FROM payments
+                   WHERE YEAR(created_at) = YEAR(CURDATE())"""
+            )
+            total_revenue = cur.fetchone()['total'] or 0
+
+            cur.execute(
+                """SELECT p.id, p.created_at, p.billing_name,
+                          p.payment_method, p.amount,
+                          'Completed' AS status
+                   FROM payments p
+                   ORDER BY p.created_at DESC
+                   LIMIT 50"""
+            )
+            transactions = cur.fetchall()
+
+        for transaction in transactions:
+            transaction['created_at'] = transaction['created_at'].strftime('%b %d, %Y')
+
+        return jsonify({
+            'total_revenue': total_revenue,
+            'trainer_payouts': 0,
+            'operational_costs': 0,
+            'net_profit': total_revenue,
+            'transactions': transactions
+        })
     finally:
         conn.close()
 
