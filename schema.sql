@@ -171,6 +171,14 @@ CREATE TABLE IF NOT EXISTS trainer_clients (
     FOREIGN KEY (client_id) REFERENCES users(id) ON DELETE CASCADE,
     UNIQUE KEY unique_assignment (trainer_id, client_id)
 );
+    -- Email verification tokens
+    CREATE TABLE IF NOT EXISTS email_verification_tokens (
+        id         INT AUTO_INCREMENT PRIMARY KEY,
+        user_id    INT NOT NULL,
+        token      VARCHAR(128) NOT NULL UNIQUE,
+        expires_at DATETIME NOT NULL,
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    );
 
 DELETE FROM users;
 

@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await res.json();
 
             if (res.ok) {
+                successMsg.textContent = data.message || 'Check your email to verify your account.';
                 successMsg.style.display = 'block';
                 setTimeout(() => window.location.href = '/admin/login', 1500);
             } else {

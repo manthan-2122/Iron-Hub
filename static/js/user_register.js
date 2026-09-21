@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await res.json();
 
             if (res.ok) {
-                successMsg.textContent = 'Registration submitted! Awaiting admin approval.';
+                successMsg.textContent = data.message || 'Check your email to verify your account.';
                 successMsg.style.display = 'block';
                 setTimeout(() => window.location.href = '/login', 2500);
             } else {

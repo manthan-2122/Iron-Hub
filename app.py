@@ -6,6 +6,10 @@ from io import BytesIO
 import hashlib
 import os
 import shutil
+import secrets
+import smtplib
+from email.message import EmailMessage
+from datetime import datetime, timedelta
 
 try:
     import psutil
@@ -19,6 +23,60 @@ app.config['SESSION_COOKIE_HTTPONLY'] = True
 
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
+
+def create_email_verification_table():
+    try:
+        conn = db_connection()
+        with conn.cursor() as cur:
+            cur.execute("""
+                CREATE TABLE IF NOT EXISTS email_verification_tokens (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    user_id INT NOT NULL,
+                    token VARCHAR(128) NOT NULL UNIQUE,
+                    expires_at DATETIME NOT NULL,
+                    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+                )
+            """)
+            conn.commit()
+        conn.close()
+    except Exception as e:
+        print(f"Error creating email verification table: {e}")
+
+def send_verification_email(email, token):
+    smtp_host = os.getenv('SMTP_HOST')
+    smtp_port = int(os.getenv('SMTP_PORT', '587'))
+    smtp_user = os.getenv('SMTP_USER')
+    smtp_password = os.getenv('SMTP_PASSWORD')
+    if not all([smtp_host, smtp_user, smtp_password]):
+        raise RuntimeError('Email verification is not configured on the server.')
+
+    verify_url = f"{request.host_url.rstrip('/')}/verify-email/{token}"
+    message = EmailMessage()
+    message['Subject'] = 'Verify your Iron Hub email address'
+    message['From'] = smtp_user
+    message['To'] = email
+    message.set_content(f"Verify your Iron Hub account by opening this link:\n\n{verify_url}\n\nThis link expires in 24 hours.")
+
+    with smtplib.SMTP(smtp_host, smtp_port) as server:
+        server.starttls()
+        server.login(smtp_user, smtp_password)
+        server.send_message(message)
+
+def create_pending_email_verification(cur, user_id, email):
+    token = secrets.token_urlsafe(48)
+    expires_at = datetime.utcnow() + timedelta(hours=24)
+    cur.execute(
+        "INSERT INTO email_verification_tokens (user_id, token, expires_at) VALUES (%s, %s, %s)",
+        (user_id, token, expires_at)
+    )
+    send_verification_email(email, token)
+
+def email_verified(cur, user_id):
+    cur.execute(
+        "SELECT id FROM email_verification_tokens WHERE user_id = %s AND expires_at > UTC_TIMESTAMP()",
+        (user_id,)
+    )
+    return cur.fetchone() is None
 
 # ── Fix subscriptions ENUM on startup ─────────────────
 def fix_subscription_enum():
@@ -85,6 +143,7 @@ def create_trainer_profiles_table():
 fix_subscription_enum()
 create_measurements_table()
 create_trainer_profiles_table()
+create_email_verification_table()
 
 # ── Create trainer_workout_plans table if not exists ──
 def create_trainer_workout_plans_table():
@@ -466,8 +525,10 @@ def api_register_user():
                 "INSERT INTO users (first_name, last_name, email, password, role, status) VALUES (%s, %s, %s, %s, 'user', 'Pending')",
                 (fname, lname, email, hash_password(password))
             )
+            user_id = cur.lastrowid
+            create_pending_email_verification(cur, user_id, email)
             conn.commit()
-        return jsonify({'message': 'Registration submitted. Awaiting admin approval.'}), 201
+        return jsonify({'message': 'Registration submitted. Check your email to verify your account.'}), 201
     finally:
         conn.close()
 
@@ -501,8 +562,9 @@ def api_register_trainer():
                 "INSERT INTO trainers (user_id, specialization, experience) VALUES (%s, %s, %s)",
                 (user_id, specialization, experience)
             )
+            create_pending_email_verification(cur, user_id, email)
             conn.commit()
-        return jsonify({'message': 'Trainer registered successfully.'}), 201
+        return jsonify({'message': 'Registration submitted. Check your email to verify your account.'}), 201
     finally:
         conn.close()
 
@@ -528,8 +590,32 @@ def api_register_admin():
                 "INSERT INTO users (first_name, last_name, email, password, role) VALUES (%s, %s, %s, %s, 'admin')",
                 (username, '', email, hash_password(password))
             )
+            user_id = cur.lastrowid
+            create_pending_email_verification(cur, user_id, email)
             conn.commit()
-        return jsonify({'message': 'Admin registered successfully.'}), 201
+        return jsonify({'message': 'Registration submitted. Check your email to verify your account.'}), 201
+    finally:
+        conn.close()
+
+@app.route('/verify-email/<token>')
+def verify_email(token):
+    conn = db_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                "SELECT user_id FROM email_verification_tokens WHERE token = %s AND expires_at > UTC_TIMESTAMP()",
+                (token,)
+            )
+            verification = cur.fetchone()
+            if not verification:
+                return 'This verification link is invalid or has expired.', 400
+
+            cur.execute(
+                "DELETE FROM email_verification_tokens WHERE user_id = %s",
+                (verification['user_id'],)
+            )
+            conn.commit()
+        return 'Email verified successfully. You can now log in.'
     finally:
         conn.close()
 
@@ -554,6 +640,8 @@ def api_login_user():
 
         if not user:
             return jsonify({'error': 'Invalid email or password.'}), 401
+        if not email_verified(cur, user['id']):
+            return jsonify({'error': 'Please verify your email before logging in.'}), 403
         if user['role'] != 'user':
             return jsonify({'error': 'This account is not a user account.'}), 403
         if user['status'] == 'Pending':
@@ -589,6 +677,8 @@ def api_login_trainer():
 
         if not user:
             return jsonify({'error': 'Invalid email or password.'}), 401
+        if not email_verified(cur, user['id']):
+            return jsonify({'error': 'Please verify your email before logging in.'}), 403
         if user['role'] != 'trainer':
             return jsonify({'error': 'This account is not a trainer account.'}), 403
         if user['status'] != 'Active':
@@ -623,6 +713,8 @@ def api_login_admin():
 
         if not user:
             return jsonify({'error': 'Invalid username or password.'}), 401
+        if not email_verified(cur, user['id']):
+            return jsonify({'error': 'Please verify your email before logging in.'}), 403
         if user['role'] != 'admin':
             return jsonify({'error': 'This account does not have admin privileges.'}), 403
         if user['status'] != 'Active':
